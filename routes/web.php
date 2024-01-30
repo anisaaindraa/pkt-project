@@ -8,6 +8,8 @@ use Inertia\Inertia;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FormulirPatroliLautController;
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,14 +31,13 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/dashboard', function () {
+        return Inertia::render('Dashboard');
+    })->name('dashboard');
 });
 
 Route::get('/datatable', [DashboardController::class, 'dataTable'])->name('datatable');
@@ -48,5 +49,16 @@ Route::post('/createusers', [UserController::class, 'store'])->name('users.store
 Route::get('users/{id}/edit', [UserController::class, 'edit'])->name('users.edit')->middleware(['auth']);
 Route::put('users/{id}', [UserController::class, 'update'])->name('users.update')->middleware(['auth']);
 // Route::delete('/users/{id}', 'UserController@destroy')->name('users.destroy');
+Route::get('test', function () {
+    $key = 'example_key';
+    $payload = [
+        'iss' => 'test@gmail.com',
+        'exp' => time() + 3600
+    ];
+    $jwt = JWT::encode($payload, $key, 'HS256');
+    $decoded = JWT::decode($jwt, new Key($key, 'HS256'));
+    dd($decoded);
+});
+
 
 require __DIR__ . '/auth.php';
