@@ -11,11 +11,12 @@ class FormulirPatroliLaut extends Model
 {
     use HasFactory, softDeletes;
 
-    protected $table = 'formulirpatrolilaut';
+    protected $table = 'formulir_patroli_laut';
 
     protected $primaryKey = 'id';
 
     protected $fillable = [
+        'users_id',
         'tanggal_kejadian',
         'm_shift_id',
         'uraian_hasil',

@@ -3,7 +3,9 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\FormulirPatroliLaut;
 use App\Models\Role;
+use App\Models\Status;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\MPos;
@@ -98,7 +100,22 @@ class DatabaseSeeder extends Seeder
             'keterangan' => 'Desk D',
         ]);
 
-        
+        Status::create([
+            'nama_status' => 'Submitted',
+        ]);
+
+        Status::create([
+            'nama_status' => 'Approved',
+        ]);
+
+        FormulirPatroliLaut::create([
+            'users_id' => '1',
+            'tanggal_kejadian' => '2023-01-01',
+            'm_shift_id' => '2',
+            'uraian_hasil' => 'Lorem Ipsum',
+            'keterangan' => 'Aman',
+            'status_id' => '1',
+        ]);
 
     }
 }

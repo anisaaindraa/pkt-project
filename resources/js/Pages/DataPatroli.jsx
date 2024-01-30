@@ -34,9 +34,7 @@ const DataTablePatroli = ({ dataPatroli }) => {
             <th className="py-2 px-4 border-b">Created At</th>
             <th className="py-2 px-4 border-b">Updated At</th>
             <th className="py-2 px-4 border-b">Pelapor</th>
-            <th className="py-2 px-4 border-b">Mengetahui</th>
             <th className="py-2 px-4 border-b">Status</th>
-            <th className="py-2 px-4 border-b">Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -44,14 +42,13 @@ const DataTablePatroli = ({ dataPatroli }) => {
             <tr key={formulir_patroli_laut.id} className="border-b">
               <td className="py-2 px-4">{formulir_patroli_laut.id}</td>
               <td className="py-2 px-4">{formulir_patroli_laut.tanggal_kejadian}</td>
-              <td className="py-2 px-4">{formulir_patroli_laut.m_shift_id}</td>
+              <td className="py-2 px-4">{formulir_patroli_laut.m_shift_id && formulir_patroli_laut.m_shift_id.nama_shift}</td>
               <td className="py-2 px-4">{formulir_patroli_laut.uraian_hasil}</td>
               <td className="py-2 px-4">{formulir_patroli_laut.keterangan}</td>
               <td className="py-2 px-4">{formulir_patroli_laut.created_at}</td>
               <td className="py-2 px-4">{formulir_patroli_laut.updated_at}</td>
-              <td className="py-2 px-4">{formulir_patroli_laut.users_id}</td>
-              <td className="py-2 px-4">{formulir_patroli_laut.mengetahui}</td>
-              <td className="py-2 px-4">{formulir_patroli_laut.status}</td>
+              <td className="py-2 px-4">{formulir_patroli_laut.users_id && formulir_patroli_laut.users_id.nama_user}</td>
+              <td className="py-2 px-4">{formulir_patroli_laut.status_id && formulir_patroli_laut.status.id.nama_status}</td>
               <td className="py-2 px-4">
                 <InertiaLink
                   href={route('edit.data.patroli', { id: formulir_patroli_laut.id })}

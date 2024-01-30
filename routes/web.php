@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\APIController;
 use App\Http\Controllers\FormulirPatroliLaut;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
@@ -49,6 +50,7 @@ Route::post('/createusers', [UserController::class, 'store'])->name('users.store
 Route::get('users/{id}/edit', [UserController::class, 'edit'])->name('users.edit')->middleware(['auth']);
 Route::put('users/{id}', [UserController::class, 'update'])->name('users.update')->middleware(['auth']);
 // Route::delete('/users/{id}', 'UserController@destroy')->name('users.destroy');
+
 Route::get('test', function () {
     $key = 'example_key';
     $payload = [
@@ -59,6 +61,8 @@ Route::get('test', function () {
     $decoded = JWT::decode($jwt, new Key($key, 'HS256'));
     dd($decoded);
 });
+
+Route::post('/login', [APIController::class, 'login']);
 
 
 require __DIR__ . '/auth.php';

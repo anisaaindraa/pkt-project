@@ -17,6 +17,7 @@ return new class extends Migration {
             $table->unsignedBigInteger('m_shift_id');
             $table->string('uraian_hasil');
             $table->string('keterangan');
+            $table->unsignedBigInteger('status_id');
             $table->timestamps();
             $table->softDeletes();
             $table->string('created_by')->nullable();
@@ -25,6 +26,7 @@ return new class extends Migration {
 
             $table->foreign('users_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('m_shift_id')->references('id')->on('m_shift')->onDelete('cascade');
+            $table->foreign('status_id')->references('id')->on('status')->onDelete('cascade');
         });
     }
 

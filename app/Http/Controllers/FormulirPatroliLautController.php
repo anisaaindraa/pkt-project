@@ -39,7 +39,6 @@ class FormulirPatroliLautController extends Controller
             'm_shift_id' => 'required|exists:m_shift,id',
             'uraian_hasil' => 'required|string',
             'keterangan' => 'required|string',
-
         ]);
 
         $formulir = FormulirPatroliLaut::create($request->all());
