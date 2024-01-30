@@ -62,7 +62,7 @@ Route::get('test', function () {
     dd($decoded);
 });
 
-Route::post('/login', [APIController::class, 'login']);
+// Route::post('/login', [APIController::class, 'login']);
 
 
 require __DIR__ . '/auth.php';

@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Firebase\JWT\ExpiredException;
 use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 use Illuminate\Http\Request;
 
 class AuthAPI
@@ -18,8 +19,7 @@ class AuthAPI
         }
 
         try {
-            $key = 'example_key';
-            $decoded = JWT::decode($token, $key, ['HS256']);
+            $decoded = JWT::decode($token, new Key(config('app.jwt_token'), 'HS256'));
             $request->user = $decoded;
         } catch (ExpiredException $e) {
             return response()->json(['error' => 'Token expired'], 401);

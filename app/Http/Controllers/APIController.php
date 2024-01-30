@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Firebase\JWT\JWT;
 use Illuminate\Http\Request;
-use illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Validator;
 
 class APIController extends Controller
 {
@@ -11,7 +12,7 @@ class APIController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'email' => ['required', 'email'],
-            'password' => 'required|min:6',
+            'password' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -28,11 +29,18 @@ class APIController extends Controller
             ], 401);
         }
 
+        $payload = [
+            'iss' => auth()->guard('api')->user(),
+            'exp' => time() + 3600
+        ];
+
+        $jwt = JWT::encode($payload, config("app.jwt_token"), 'HS256');
+
         //if auth success
         return response()->json([
             'success' => true,
             'user' => auth()->guard('api')->user(),
-            'token' => $token
+            'token' => $jwt
         ], 200);
 
     }
