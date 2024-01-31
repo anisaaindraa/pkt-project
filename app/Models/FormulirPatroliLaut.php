@@ -28,4 +28,8 @@ class FormulirPatroliLaut extends Model
         return $this->belongsTo(MShift::class);
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
