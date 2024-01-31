@@ -1,9 +1,7 @@
-// DataTablePatroli.jsx
-
 import React from 'react';
 import { InertiaLink } from '@inertiajs/inertia-react';
 
-const DataTablePatroli = ({ dataPatroli }) => {
+const DataTablePatroli = ({ formulir_patroli_laut }) => {
   const handleDelete = (id) => {
     if (confirm('Apakah Anda yakin ingin menghapus data patroli ini?')) {
       Inertia.post(route('delete.data.patroli', { id }), {}, {
@@ -35,10 +33,11 @@ const DataTablePatroli = ({ dataPatroli }) => {
             <th className="py-2 px-4 border-b">Updated At</th>
             <th className="py-2 px-4 border-b">Pelapor</th>
             <th className="py-2 px-4 border-b">Status</th>
+            <th className="py-2 px-4 border-b">Actions</th>
           </tr>
         </thead>
         <tbody>
-          {dataPatroli && dataPatroli.map((formulir_patroli_laut) => (
+          {formulir_patroli_laut && formulir_patroli_laut.map((formulir_patroli_laut) => (
             <tr key={formulir_patroli_laut.id} className="border-b">
               <td className="py-2 px-4">{formulir_patroli_laut.id}</td>
               <td className="py-2 px-4">{formulir_patroli_laut.tanggal_kejadian}</td>
@@ -48,14 +47,14 @@ const DataTablePatroli = ({ dataPatroli }) => {
               <td className="py-2 px-4">{formulir_patroli_laut.created_at}</td>
               <td className="py-2 px-4">{formulir_patroli_laut.updated_at}</td>
               <td className="py-2 px-4">{formulir_patroli_laut.users_id && formulir_patroli_laut.users_id.nama_user}</td>
-              <td className="py-2 px-4">{formulir_patroli_laut.status_id && formulir_patroli_laut.status.id.nama_status}</td>
+              <td className="py-2 px-4">{formulir_patroli_laut.status_id && formulir_patroli_laut.status_id.nama_status}</td>
               <td className="py-2 px-4">
-                <InertiaLink
+                {/* <InertiaLink
                   href={route('edit.data.patroli', { id: formulir_patroli_laut.id })}
                   className="bg-blue-500 text-white px-3 py-1 rounded-md mr-2 focus:outline-none focus:shadow-outline-blue"
                 >
                   Edit
-                </InertiaLink>
+                </InertiaLink> */}
                 <button
                   onClick={() => handleDelete(formulir_patroli_laut.id)}
                   className="bg-red-500 text-white px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-red"

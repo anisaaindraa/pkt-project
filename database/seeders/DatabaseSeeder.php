@@ -110,7 +110,7 @@ class DatabaseSeeder extends Seeder
 
         FormulirPatroliLaut::create([
             'users_id' => '1',
-            'tanggal_kejadian' => '2023-01-01',
+            'tanggal_kejadian' => '2023-01-01 09:30:00',
             'm_shift_id' => '2',
             'uraian_hasil' => 'Lorem Ipsum',
             'keterangan' => 'Aman',
