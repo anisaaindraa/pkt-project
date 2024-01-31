@@ -24,5 +24,9 @@ class FormulirPelaporanKejadian extends Model
         'keterangan_lain',
     ];
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
 }
