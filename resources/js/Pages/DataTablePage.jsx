@@ -53,7 +53,8 @@ const DataTablePage = ({ users }) => {
               <td className="py-2 px-4">{user.npk_user}</td>
               <td className="py-2 px-4">{user.created_at}</td>
               <td className="py-2 px-4">{user.updated_at}</td>
-              <td className="py-2 px-4">
+              <td className="py-2 px-4 flex">
+
               <InertiaLink
                 href={route('users.edit', { id: user.id })}
                 className="bg-blue-500 text-white px-3 py-1 rounded-md mr-2 focus:outline-none focus:shadow-outline-blue"
