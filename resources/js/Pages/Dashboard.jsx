@@ -43,6 +43,15 @@ export default function Dashboard({ auth }) {
                 Go to Data Formulir Pelaporan Kejadian
               </InertiaLink>
             </div>
+
+            {/* Data Role Card */}
+            <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
+              <h3 className="text-xl font-semibold mb-4">Role</h3>
+              <InertiaLink href='/dataroles' className="text-blue-500 hover:underline">
+                Go to Role
+              </InertiaLink>
+            </div>
+
           </div>
         </div>
       </div>

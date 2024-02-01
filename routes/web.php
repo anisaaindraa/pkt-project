@@ -11,6 +11,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\FormulirPatroliLautController;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
+use App\Http\Controllers\RoleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,6 +52,19 @@ Route::get('users/{id}/edit', [UserController::class, 'edit'])->name('users.edit
 Route::put('users/{id}', [UserController::class, 'update'])->name('users.update')->middleware(['auth']);
 // Route::delete('/users/{id}', 'UserController@destroy')->name('users.destroy');
 
+//Role Controller
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', [RoleController::class, 'index'])->name('dashboard');
+    Route::get('/dataroles', [RoleController::class, 'dataRole'])->name('dataroles');
+    Route::get('/roles/create', [RoleController::class, 'create'])->name('create.roles');
+    Route::post('/roles/store', [RoleController::class, 'store'])->name('roles.store');
+    Route::get('/roles/{id}/edit', [RoleController::class, 'edit'])->name('roles.edit');
+    Route::put('/roles/{id}/update', [RoleController::class, 'update'])->name('roles.update');
+    Route::delete('/roles/{id}/destroy', [RoleController::class, 'destroy'])->name('roles.destroy');
+});
+
+
+
 Route::get('test', function () {
     $key = 'example_key';
     $payload = [
@@ -61,8 +75,6 @@ Route::get('test', function () {
     $decoded = JWT::decode($jwt, new Key($key, 'HS256'));
     dd($decoded);
 });
-
-// Route::post('/login', [APIController::class, 'login']);
 
 
 require __DIR__ . '/auth.php';

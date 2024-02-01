@@ -9,6 +9,11 @@ use Inertia\Inertia;
 
 class RoleController extends Controller
 {
+    public function index()
+    {
+        return Inertia::render("Dashboard");
+    }
+
     public function dataRole()
     {
         $roles = Role::all();
@@ -26,13 +31,10 @@ class RoleController extends Controller
     public function edit($id)
     {
         try {
-            $user = User::findOrfail($id);
-            $roles = Role::all();
-
+            $role = Role::findOrFail($id);
             return Inertia::render('RoleEditPage', [
-                'user' => $user,
-                'roles' => $roles,
-                'updateUrl' => route('role.update', ['id' => $id]),
+                'role' => $role,
+                'updateUrl' => route('roles.update', ['id' => $id]),
             ]);
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
@@ -41,16 +43,16 @@ class RoleController extends Controller
 
     public function update(Request $request, $id)
     {
-        $roles = Role::all();
+        $role = Role::find($id);
         $validateData = $request->validate([
             'nama_role' => 'required|string',
         ]);
 
         try {
-            $roles->update($validateData);
-            return redirect()->route('roles.edit', $roles)->with('success', 'Roles berhasil diaupdate');
+            $role->update($validateData);
+            return redirect()->route('roles.edit', ['id' => $id])->with('success', 'Role berhasil diupdate');
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Terjadi kesalahan saat megupdate roles');
+            return redirect()->route('dataroles')->with('error', 'Terjadi kesalahan saat mengupdate role');
         }
     }
 
@@ -63,7 +65,7 @@ class RoleController extends Controller
 
         try {
             $roles = Role::create([
-                'nama_role' => 'required|string',
+                'nama_role' => $request->nama_role,
             ]);
 
             // Redirect atau berikan respons sukses
