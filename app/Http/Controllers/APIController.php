@@ -42,6 +42,22 @@ class APIController extends Controller
             'user' => auth()->guard('api')->user(),
             'token' => $jwt
         ], 200);
-
     }
+
+    public function storeFormulirPatroliLaut(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'users_id' => ['required', 'integer'],
+            'tanggal_kejadian' => ['required', 'date'],
+            'm_shift_id' => ['required', 'integer'],
+            'uraian_hasil' => ['required', 'string'],
+            'keterangan' => ['required', 'string'],
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+    }
+
+
 }
