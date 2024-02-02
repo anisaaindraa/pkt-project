@@ -1,16 +1,48 @@
-// DataRolePage.jsx
-
-import React from 'react';
+import React, { useState } from 'react';
 import { InertiaLink } from '@inertiajs/inertia-react';
+import Modal from '@/Components/Modal';
+import Checkbox from '@/Components/Checkbox';// Sesuaikan path dengan struktur folder Anda
 
 const DataRolePage = ({ roles }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedRoleId, setSelectedRoleId] = useState(null);
+  const [selectedPermissions, setSelectedPermissions] = useState([]);
+  
   const handleDelete = (roleId) => {
     // ... implementasi handleDelete
   };
 
   const handleAssignPermission = (roleId) => {
-    // ... implementasi handleAssignPermission
+    setSelectedRoleId(roleId);
+    setIsModalOpen(true);
   };
+
+  const handleCloseModal = () => {
+    setSelectedRoleId(null);
+    setIsModalOpen(false);
+  };
+
+  const handleCheckboxChange = (permission) => {
+    const updatedPermissions = selectedPermissions.includes(permission)
+      ? selectedPermissions.filter((p) => p !== permission)
+      : [...selectedPermissions, permission];
+    setSelectedPermissions(updatedPermissions);
+  };
+
+  // Data dummy untuk checkbox
+  const dummyPermissions = [
+    { id: 1, nama_permission: 'Permission 1' },
+    { id: 2, nama_permission: 'Permission 2' },
+    { id: 3, nama_permission: 'Permission 3' },
+  ];
+
+  const handlePermissionSubmit = () => {
+    // Implementasi logika penanganan submit permission di sini
+    console.log('Selected Permissions:', selectedPermissions);
+    // TODO: Lakukan sesuatu dengan selectedPermissions
+    handleCloseModal(); // Menutup modal setelah submit
+  };
+
 
   return (
     <div className="container mx-auto mt-8">
@@ -62,9 +94,34 @@ const DataRolePage = ({ roles }) => {
         </tbody>
       </table>
 
+      {/* Tombol kembali ke dashboard */}
       <InertiaLink href="/dashboard" className="block bg-gray-500 text-white px-4 py-2 w-fit rounded-md mt-4">
         Back to Dashboard
       </InertiaLink>
+      <Modal show={isModalOpen} onClose={handleCloseModal}>
+        {/* Isi modal Assign Permission */}
+        <div className="p-6 bg-white rounded-lg shadow-xl">
+          <h1 className="text-2xl font-semibold mb-4">Assign Permission for Role ID: {selectedRoleId}</h1>
+          <div>
+            {dummyPermissions.map((permission) => (
+              <Checkbox
+                key={permission.id}
+                label={permission.nama_permission}
+                checked={selectedPermissions.includes(permission)}
+                onChange={() => handleCheckboxChange(permission)}
+              />
+            ))}
+          </div>
+          <div className="flex justify-end mt-4">
+            <button className="mr-2 bg-gray-600 text-white px-4 py-2 rounded" onClick={handleCloseModal}>
+              Cancel
+            </button>
+            <button className="bg-blue-500 text-white px-4 py-2 rounded" onClick={handlePermissionSubmit}>
+              Submit
+            </button>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 };

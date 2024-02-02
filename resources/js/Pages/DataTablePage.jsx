@@ -33,7 +33,6 @@ const DataTablePage = ({ users }) => {
             <th className="py-2 px-4 border-b">Username</th>
             <th className="py-2 px-4 border-b">Email</th>
             <th className="py-2 px-4 border-b">Nama</th>
-            <th className="py-2 px-4 border-b">Alamat</th>
             <th className="py-2 px-4 border-b">Pekerjaan</th>
             <th className="py-2 px-4 border-b">NPK</th>
             <th className="py-2 px-4 border-b">Created At</th>
@@ -48,7 +47,6 @@ const DataTablePage = ({ users }) => {
               <td className="py-2 px-4">{user.username}</td>
               <td className="py-2 px-4">{user.email}</td>
               <td className="py-2 px-4">{user.nama_user}</td>
-              <td className="py-2 px-4">{user.alamat_user}</td>
               <td className="py-2 px-4">{user.pekerjaan_user}</td>
               <td className="py-2 px-4">{user.npk_user}</td>
               <td className="py-2 px-4">{user.created_at}</td>

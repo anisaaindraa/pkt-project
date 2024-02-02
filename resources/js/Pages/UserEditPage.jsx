@@ -136,20 +136,6 @@ export default function UserEditPage(props) {
           </div>
 
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="alamat_user">
-              Alamat:
-            </label>
-            <input
-              type="text"
-              name="alamat_user"
-              value={formData.alamat_user}
-              onChange={handleChange}
-              className="border rounded-md px-3 py-2 w-full"
-            />
-            <br />
-          </div>
-
-          <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="pekerjaan_user">
               Pekerjaan:
             </label>
