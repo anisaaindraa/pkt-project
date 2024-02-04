@@ -6,6 +6,9 @@ const DataTableKejadian = ({ formulir_pelaporan_kejadian }) => {
   return (
     // console.log(formulir_pelaporan_kejadian) 
     <div className="container mx-auto mt-8">
+      <div className="flex justify-between items-center mb-4">
+        <h1 className="text-3xl font-semibold">Data Formulir Pelaporan Kejadian</h1>
+      </div>
       <table className="min-w-full border border-gray-300">
         <thead className="bg-gray-200">
           <tr>

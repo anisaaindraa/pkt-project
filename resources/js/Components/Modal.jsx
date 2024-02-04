@@ -1,21 +1,12 @@
-// Modal.jsx
 import { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 
-export default function Modal({ children, show = false, maxWidth = '2xl', closeable = true, onClose = () => {} }) {
+export default function Modal({ children, show = false, closeable = true, onClose = () => {} }) {
   const close = () => {
     if (closeable) {
       onClose();
     }
   };
-
-  const maxWidthClass = {
-    sm: 'sm:max-w-sm',
-    md: 'sm:max-w-md',
-    lg: 'sm:max-w-lg',
-    xl: 'sm:max-w-xl',
-    '2xl': 'sm:max-w-2xl',
-  }[maxWidth];
 
   return (
     <Transition show={show} as={Fragment} leave="duration-200">
@@ -47,10 +38,13 @@ export default function Modal({ children, show = false, maxWidth = '2xl', closea
           leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
         >
           <Dialog.Panel
-            className={`bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:w-full sm:mx-auto ${maxWidthClass}`}
+            className="fixed inset-0 overflow-hidden flex items-center justify-center"
           >
-            <div className="p-4">
-              {children} {/* Memasukkan konten ke dalam modal */}
+            <div className="bg-white w-full h-full max-w-screen-lg md:max-w-90 md:flex md:flex-row rounded-md md:h-3/4">
+              {/* Split the content into two equal sections */}
+              <div className="flex-1 overflow-y-auto p-4">
+                {children}
+              </div>
             </div>
           </Dialog.Panel>
         </Transition.Child>
@@ -58,5 +52,3 @@ export default function Modal({ children, show = false, maxWidth = '2xl', closea
     </Transition>
   );
 }
-
-// bikin bisa di scroll 

@@ -54,7 +54,6 @@ Route::get('/createusers', [UserController::class, 'create'])->name('create.user
 Route::post('/createusers', [UserController::class, 'store'])->name('users.store');
 Route::get('users/{id}/edit', [UserController::class, 'edit'])->name('users.edit')->middleware(['auth']);
 Route::put('users/{id}', [UserController::class, 'update'])->name('users.update')->middleware(['auth']);
-// Route::delete('/users/{id}', 'UserController@destroy')->name('users.destroy');
 
 //Role Controller
 Route::middleware(['auth'])->group(function () {

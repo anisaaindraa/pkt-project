@@ -19,7 +19,7 @@ const DataTablePatroli = ({ formulir_patroli_laut }) => {
   return (
     <div className="container mx-auto mt-8">
       <div className="flex justify-between items-center mb-4">
-        <h1 className="text-3xl font-semibold">Formulir Hasil Patroli Laut</h1>
+        <h1 className="text-3xl font-semibold">Data Formulir Hasil Patroli Laut</h1>
       </div>
       <table className="min-w-full border border-gray-300">
         <thead className="bg-gray-200">
