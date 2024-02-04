@@ -4,7 +4,10 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\FormulirPatroliLaut;
+use App\Models\FormulirPelaporanKejadian;
+use App\Models\Korban;
 use App\Models\MBarangInventaris;
+use App\Models\Pelaku;
 use App\Models\Permission;
 use App\Models\Role;
 use App\Models\Status;
@@ -22,8 +25,10 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // \App\Models\User::factory(10)->create();
-        Role::create([
-            "nama_role" => "Admin",
+        Role::insert([
+            ["nama_role" => "Admin"],
+            ["nama_role" => "SuperAdmin"],
+            ["nama_role" => "User"],
         ]);
 
         User::create([
@@ -100,6 +105,34 @@ class DatabaseSeeder extends Seeder
             'uraian_hasil' => 'Lorem Ipsum',
             'keterangan' => 'Aman',
             'status_id' => '1',
+        ]);
+
+        FormulirPelaporanKejadian::create([
+            'users_id' => '1',
+            'jenis_kejadian' => 'Kehilangan',
+            'tanggal_kejadian' => '2023-12-01 11:03:00',
+            'waktu_kejadian' => '2023-12-01 11:03:00',
+            'tempat_kejadian' => 'kantor dept.keamanan',
+            'kerugian_akibat_kejadian' => 'kehilangan HP',
+            'keterangan_lain' => 'HP berwarna hitam, dengan case HP berwara pink',
+        ]);
+
+        Korban::create([
+            'formulir_pelaporan_kejadian_id' => '1',
+            'nama_korban' => 'Cici',
+            'umur_korban' => '24',
+            'pekerjaan_korban' => 'karyawan',
+            'alamat_korban' => 'PC 6',
+            'no_tlp_korban' => '089677637826',
+        ]);
+
+        Pelaku::create([
+            'formulir_pelaporan_kejadian_id' => '1',
+            'nama_pelaku' => 'Rangga',
+            'umur_pelaku' => '40',
+            'pekerjaan_pelaku' => 'karyawan',
+            'alamat_pelaku' => 'bontang',
+            'no_tlp_pelaku' => '087846192864',
         ]);
 
         Permission::insert([

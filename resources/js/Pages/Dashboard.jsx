@@ -39,7 +39,7 @@ export default function Dashboard({ auth }) {
             {/* Data Formulir Pelaporan Kejadian Card */}
             <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
               <h3 className="text-xl font-semibold mb-4">Data Formulir Pelaporan Kejadian</h3>
-              <InertiaLink href='/kejadian' className="text-blue-500 hover:underline">
+              <InertiaLink href='/datakejadian' className="text-blue-500 hover:underline">
                 Go to Data Formulir Pelaporan Kejadian
               </InertiaLink>
             </div>

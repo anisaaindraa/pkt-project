@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\APIController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\FormulirPatroliLaut;
+use App\Http\Controllers\FormulirPelaporanKejadianController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -24,14 +26,16 @@ use App\Http\Controllers\RoleController;
 |
 */
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
+// Route::get('/', function () {
+//     return Inertia::render('Welcome', [
+//         'canLogin' => Route::has('login'),
+//         'canRegister' => Route::has('register'),
+//         'laravelVersion' => Application::VERSION,
+//         'phpVersion' => PHP_VERSION,
+//     ]);
+// });
+Route::get('/', [AuthenticatedSessionController::class, 'create'])
+    ->name('login');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -63,6 +67,8 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/roles/{id}/destroy', [RoleController::class, 'destroy'])->name('roles.destroy');
 });
 
+
+Route::get('/datakejadian', [FormulirPelaporanKejadianController::class, 'datakejadian'])->name('datakejadian');
 
 
 Route::get('test', function () {

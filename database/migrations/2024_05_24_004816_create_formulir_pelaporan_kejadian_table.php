@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->unsignedBigInteger('users_id');
             $table->string('jenis_kejadian');
-            $table->dateTime('tanggal_kejaidan');
+            $table->dateTime('tanggal_kejadian');
             $table->timestamp('waktu_kejadian');
             $table->string('tempat_kejadian');
             $table->string('kerugian_akibat_kejadian');

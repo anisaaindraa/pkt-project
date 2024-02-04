@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Permission;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -17,7 +18,8 @@ class RoleController extends Controller
     public function dataRole()
     {
         $roles = Role::all();
-        return Inertia::render("DataRolePage", ['roles' => $roles]);
+        $permission = Permission::all();
+        return Inertia::render("DataRolePage", ['roles' => $roles, 'permission' => $permission]);
     }
 
     public function create()

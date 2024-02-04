@@ -58,3 +58,5 @@ export default function Modal({ children, show = false, maxWidth = '2xl', closea
     </Transition>
   );
 }
+
+// bikin bisa di scroll 

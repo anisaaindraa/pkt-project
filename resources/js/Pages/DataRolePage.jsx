@@ -1,15 +1,30 @@
 import React, { useState } from 'react';
 import { InertiaLink } from '@inertiajs/inertia-react';
 import Modal from '@/Components/Modal';
-import Checkbox from '@/Components/Checkbox';// Sesuaikan path dengan struktur folder Anda
+import Checkbox from '@/Components/Checkbox';
+import { Inertia } from '@inertiajs/inertia';// Sesuaikan path dengan struktur folder Anda
 
-const DataRolePage = ({ roles }) => {
+const DataRolePage = ({ roles, permission }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedRoleId, setSelectedRoleId] = useState(null);
   const [selectedPermissions, setSelectedPermissions] = useState([]);
   
-  const handleDelete = (roleId) => {
-    // ... implementasi handleDelete
+  const handleDelete = async (roleId)=> {
+    try {
+      await Inertia.delete(`/roles/${roleId}/destroy`, {
+        onSuccess: () => {
+          console.log('success');
+          // Handle success action if needed
+          Inertia.visit(route('dataroles')); // Redirect to the data roles page after successful update
+        },
+        onError: (errors) => {
+          console.log('error', errors);
+          // Handle error action if needed
+        },
+      });
+    } catch (error) {
+      console.error('Error updating role:', error);
+    }
   };
 
   const handleAssignPermission = (roleId) => {
@@ -76,6 +91,12 @@ const DataRolePage = ({ roles }) => {
                 >
                   Edit
                 </InertiaLink>
+                {/* <InertiaLink
+                  href={route('roles.destroy', { id: role.id })}
+                  className="bg-red-500 text-white px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-red"
+                >
+                  Delete
+                </InertiaLink> */}
                 <button
                   onClick={() => handleDelete(role.id)}
                   className="bg-red-500 text-white px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-red"
@@ -103,12 +124,12 @@ const DataRolePage = ({ roles }) => {
         <div className="p-6 bg-white rounded-lg shadow-xl">
           <h1 className="text-2xl font-semibold mb-4">Assign Permission for Role ID: {selectedRoleId}</h1>
           <div>
-            {dummyPermissions.map((permission) => (
+            {permission.map((permisi) => (
               <Checkbox
-                key={permission.id}
-                label={permission.nama_permission}
-                checked={selectedPermissions.includes(permission)}
-                onChange={() => handleCheckboxChange(permission)}
+                key={permisi.id}
+                label={permisi.nama_permission}
+                checked={selectedPermissions.includes(permisi)}
+                onChange={() => handleCheckboxChange(permisi)}
               />
             ))}
           </div>

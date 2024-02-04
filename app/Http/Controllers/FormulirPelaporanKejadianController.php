@@ -11,13 +11,13 @@ class FormulirPelaporanKejadianController extends Controller
     public function index()
     {
         $formulirs = FormulirPelaporanKejadian::all();
-        return response()->json(['dataKejadian' => $formulirs]);
+        return Inertia::render('DataKejadian', ['formulir_pelaporan_kejadian' => $formulirs]);
     }
 
     public function datakejadian()
     {
         $formulir_pelaporan_kejadian = FormulirPelaporanKejadian::all();
-        return Inertia::render('DataTableKejadian', ['formulir_pelaporan_kejadian' => $formulir_pelaporan_kejadian]);
+        return Inertia::render('DataKejadian', ['formulir_pelaporan_kejadian' => $formulir_pelaporan_kejadian]);
     }
 
     public function show($id)
