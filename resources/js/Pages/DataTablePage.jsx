@@ -1,20 +1,23 @@
 import React, { useState } from 'react';
 import { InertiaLink } from '@inertiajs/inertia-react';
+import { Inertia } from '@inertiajs/inertia';
 
 const DataTablePage = ({ users }) => {
-  const handleDelete = (userId) => {
-    if (confirm('Apakah Anda yakin ingin menghapus user ini?')) {
-      Inertia.post(
-        route('users.destroy', { id: userId }), {}, {
+  const handleDelete = async (userId) => {
+    try {
+      await Inertia.delete(`/users/${userId}/destroy`, {
         onSuccess: () => {
-          console.log(`User dengan ID ${userId} berhasil dihapus`);
-          // Refresh data setelah penghapusan
-          Inertia.reload();
+          console.log('success');
+          // Handle success action if needed
+          Inertia.visit(route('datatable')); // Redirect to the data roles page after successful update
         },
-        onError: (error) => {
-          console.error(`Terjadi kesalahan saat menghapus user: ${error.message}`);
+        onError: (errors) => {
+          console.log('error', errors);
+          // Handle error action if needed
         },
       });
+    } catch (error) {
+      console.error('Error updating User:', error);
     }
   };
 

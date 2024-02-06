@@ -46,6 +46,7 @@ Route::middleware('auth')->group(function () {
     })->name('dashboard');
 });
 
+// Dashboard Controller
 Route::get('/datatable', [DashboardController::class, 'dataTable'])->name('datatable');
 Route::get('/patroli', [DashboardController::class, 'dataPatroli'])->name('datapatroli');
 
@@ -54,8 +55,8 @@ Route::get('/createusers', [UserController::class, 'create'])->name('create.user
 Route::post('/createusers', [UserController::class, 'store'])->name('users.store');
 Route::get('users/{id}/edit', [UserController::class, 'edit'])->name('users.edit')->middleware(['auth']);
 Route::put('users/{id}', [UserController::class, 'update'])->name('users.update')->middleware(['auth']);
+Route::delete('/users/{id}/destroy', [UserController::class, 'destroy'])->name('users.destroy');
 
-//Role Controller
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [RoleController::class, 'index'])->name('dashboard');
     Route::get('/dataroles', [RoleController::class, 'dataRole'])->name('dataroles');
@@ -66,7 +67,7 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/roles/{id}/destroy', [RoleController::class, 'destroy'])->name('roles.destroy');
 });
 
-
+// Formulir Pelaporan Kejadian Controller
 Route::get('/datakejadian', [FormulirPelaporanKejadianController::class, 'datakejadian'])->name('datakejadian');
 
 
@@ -80,6 +81,5 @@ Route::get('test', function () {
     $decoded = JWT::decode($jwt, new Key($key, 'HS256'));
     dd($decoded);
 });
-
 
 require __DIR__ . '/auth.php';
