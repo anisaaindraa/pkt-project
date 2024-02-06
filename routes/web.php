@@ -67,6 +67,13 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/roles/{id}/destroy', [RoleController::class, 'destroy'])->name('roles.destroy');
 });
 
+//Formulir Patroli Laut
+Route::get('/createformulirpatrolilaut', [FormulirPatroliLautController::class, 'create'])->name('formulirpatrolilaut.create')->middleware(['auth']);
+Route::post('/createformulirpatrolilaut', [FormulirPatroliLautController::class, 'store'])->name('formulirpatrolilaut.store');
+Route::get('formulirpatrolilaut/{id}/edit', [FormulirPatroliLautController::class, 'edit'])->name('formulirpatrolilaut.edit')->middleware(['auth']);
+Route::put('formulirpatrolilaut/{id}', [FormulirPatroliLautController::class, 'update'])->name('formulirpatrolilaut.update')->middleware(['auth']);
+Route::delete('/formulirpatrolilaut/{id}/destroy', [FormulirPatroliLautController::class, 'destroy'])->name('formulirpatrolilaut.destroy');
+
 // Formulir Pelaporan Kejadian Controller
 Route::get('/datakejadian', [FormulirPelaporanKejadianController::class, 'datakejadian'])->name('datakejadian');
 

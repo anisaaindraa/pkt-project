@@ -20,6 +20,12 @@ const DataTablePatroli = ({ formulir_patroli_laut }) => {
     <div className="container mx-auto mt-8">
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-3xl font-semibold">Data Formulir Hasil Patroli Laut</h1>
+        <InertiaLink
+            href={route('formulirpatrolilaut.create')}
+            className="bg-green-500 text-white px-4 py-2 rounded-md"
+          >
+            Create
+          </InertiaLink>
       </div>
       <table className="min-w-full border border-gray-300">
         <thead className="bg-gray-200">
@@ -49,18 +55,20 @@ const DataTablePatroli = ({ formulir_patroli_laut }) => {
               <td className="py-2 px-4">{formulir_patroli_laut.users_id && formulir_patroli_laut.users_id.nama_user}</td>
               <td className="py-2 px-4">{formulir_patroli_laut.status_id && formulir_patroli_laut.status_id.nama_status}</td>
               <td className="py-2 px-4">
-                {/* <InertiaLink
-                  href={route('edit.data.patroli', { id: formulir_patroli_laut.id })}
-                  className="bg-blue-500 text-white px-3 py-1 rounded-md mr-2 focus:outline-none focus:shadow-outline-blue"
-                >
-                  Edit
-                </InertiaLink> */}
-                <button
-                  onClick={() => handleDelete(formulir_patroli_laut.id)}
-                  className="bg-red-500 text-white px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-red"
-                >
-                  Delete
-                </button>
+              <div className="flex">
+                  <InertiaLink
+                    href={route('formulirpatrolilaut.edit', { id: formulir_patroli_laut.id })}
+                    className="bg-blue-500 text-white px-3 py-1 rounded-md mr-1 focus:outline-none focus:shadow-outline-blue"
+                  >
+                    Edit
+                  </InertiaLink>
+                  <button
+                    onClick={() => handleDelete(formulir_patroli_laut.id)}
+                    className="bg-red-500 text-white px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-red"
+                  >
+                    Delete
+                  </button>
+                </div>
               </td>
             </tr>
           ))}
