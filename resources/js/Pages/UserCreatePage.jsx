@@ -40,9 +40,6 @@ export default function UserCreatePage(props) {
           console.log('error')
         }
       });
-  
-      // Redirect to the DataTablePage or other page
-      // Inertia.visit(route('datatable'));
     } catch (error) {
       // Check if the error is due to validation failure
       if (error.response && error.response.status === 422) {
@@ -80,10 +77,6 @@ export default function UserCreatePage(props) {
               }
             </select>
           </div>
-
-          {/* Other Form Fields */}
-          {/* Add other form fields here, similar to the example below */}
-          {/* Replace 'inputField' with your actual form field names */}
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
               Username:

@@ -12,6 +12,16 @@ class FormulirPatroliLaut extends Model
 {
     use HasFactory, softDeletes;
 
+    public function photoPatroliLauts(): HasMany
+    {
+        return $this->hasMany(PhotoPatroliLaut::class, 'formulir_patroli_laut_id');
+    }
+
+    public function posts(): HasMany
+    {
+        return $this->hasMany(Post::class);
+    }
+
     protected $table = 'formulir_patroli_laut';
 
     protected $primaryKey = 'id';
@@ -25,11 +35,6 @@ class FormulirPatroliLaut extends Model
     ];
 
     protected $dates = ['deleted_at'];
-
-    public function posts(): HasMany
-    {
-        return $this->hasMany(Post::class);
-    }
 
     public function m_shift()
     {

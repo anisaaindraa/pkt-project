@@ -27,7 +27,7 @@ class FormulirPatroliLautController extends Controller
         $shift = MShift::all();
         $storeUrl = route('formulirpatrolilaut.store');
 
-        return inertia('FormulirPatroliLautCreate', [
+        return inertia('PatroliCreatePage', [
             'shift' => $shift,
             'storeUrl' => $storeUrl
         ]);
@@ -103,13 +103,13 @@ class FormulirPatroliLautController extends Controller
 
     public function show($id)
     {
-        $formulir = FormulirPatroliLaut::find($id);
+        $formulir_patroli_laut = FormulirPatroliLaut::with('photoPatroliLauts')->find($id);
 
-        if (!$formulir) {
+        if (!$formulir_patroli_laut) {
             return response()->json(['message' => 'Formulir not found'], 404);
         }
 
-        return response()->json(['dataPatroli' => $formulir]);
+        return response()->json(['dataPatroli' => $formulir_patroli_laut]);
     }
 
     public function destroy($id)
