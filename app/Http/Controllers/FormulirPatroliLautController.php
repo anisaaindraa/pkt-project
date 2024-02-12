@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\MShift;
+use App\Models\PhotoPatroliLaut;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\FormulirPatroliLaut;

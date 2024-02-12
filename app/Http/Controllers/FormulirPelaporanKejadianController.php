@@ -43,7 +43,14 @@ class FormulirPelaporanKejadianController extends Controller
             'keterangan_lain' => 'required|string',
         ]);
 
+        // Simpan formulir pelaporan kejadian
         $formulir = FormulirPelaporanKejadian::create($request->all());
+
+        // Simpan korban
+        $formulir->korban()->createMany($request->korban);
+
+        // Simpan pelaku
+        $formulir->pelaku()->createMany($request->pelaku);
 
         return response()->json(['data' => $formulir], 201);
     }

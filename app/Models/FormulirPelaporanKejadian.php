@@ -20,13 +20,23 @@ class FormulirPelaporanKejadian extends Model
         'tanggal_kejadian',
         'waktu_kejadian',
         'tempat_kejadian',
-        'kerugian_akibat_jadian',
+        'kerugian_akibat_kejadian',
         'keterangan_lain',
     ];
 
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function korban()
+    {
+        return $this->hasMany(Korban::class);
+    }
+
+    public function pelaku()
+    {
+        return $this->hasMany(Pelaku::class);
     }
 
 }

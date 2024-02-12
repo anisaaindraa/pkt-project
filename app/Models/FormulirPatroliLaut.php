@@ -12,7 +12,7 @@ class FormulirPatroliLaut extends Model
 {
     use HasFactory, softDeletes;
 
-    public function photoPatroliLauts(): HasMany
+    public function photoPatroliLaut(): HasMany
     {
         return $this->hasMany(PhotoPatroliLaut::class, 'formulir_patroli_laut_id');
     }

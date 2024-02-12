@@ -17,7 +17,7 @@ return new class extends Migration {
             $table->dateTime('tanggal_kejadian');
             $table->timestamp('waktu_kejadian');
             $table->string('tempat_kejadian');
-            $table->string('kerugian_akibat_kejadian');
+            $table->string('kerugian_akibat_kejadian')->nullable();
             $table->string('keterangan_lain');
             $table->timestamps();
             $table->softDeletes();

@@ -104,7 +104,6 @@ class DatabaseSeeder extends Seeder
             'm_shift_id' => '2',
             'uraian_hasil' => 'Lorem Ipsum',
             'keterangan' => 'Aman',
-            'status_id' => '1',
         ]);
 
         FormulirPelaporanKejadian::create([

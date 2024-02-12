@@ -13,8 +13,7 @@ return new class extends Migration {
         Schema::create('photo_patroli_laut', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('formulir_patroli_laut_id');
-            $table->string('nama_file');
-            $table->string('path_file');
+            $table->string('photo_path');
             $table->softDeletes();
             $table->string('created_by')->nullable();
             $table->string('updated_by')->nullable();

@@ -28,8 +28,8 @@ Route::middleware(['auth.api'])->group(function () {
     Route::get('example', function () {
         return 'Hello, login passed!';
     });
-    Route::post('formpatrolilaut', [FormulirPatroliLautController::class, 'store']);
-    Route::post('formulirpelaksanaantugas', [FormulirPelaksanaanTugasController::class, 'store']);
-    Route::post('formulirpelaporankejadian', [FormulirPelaporanKejadianController::class, 'store']);
 });
+
+Route::post('formpatrolilaut', [APIController::class, 'createFormulirPatroliLaut']);
+Route::post('formpelaporankejadian', [APIController::class, 'createFormulirPelaporanKejadian']);
 
