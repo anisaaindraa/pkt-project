@@ -172,7 +172,7 @@ class APIController extends Controller
             'm_sipam_id' => ['required', 'integer', 'exists:m_sipam,id'],
             'm_shift_id' => ['required', 'integer', 'exists:m_shift,id'],
             'waktu_uraian_tugas' => ['required', 'array'],
-            'waktu_uraian_tugas.*.waktu' => ['required', 'date_format:H:i'],
+            'waktu_uraian_tugas.*.waktu' => ['required', 'date_format:H:i:s'],
             'waktu_uraian_tugas.*.uraian_tugas' => ['required', 'string'],
             'keterangan' => ['required', 'string'],
             'inventaris_pos' => [
@@ -216,26 +216,15 @@ class APIController extends Controller
                 'keterangan' => $request->keterangan,
             ]);
 
-            // Simpan waktu dan uraian tugas
-            // foreach ($request->waktu_uraian_tugas as $uraianTugas) {
-            //     // Log the 'waktu' value
-            //     \Log::info('Waktu value: ' . $uraianTugas['waktu']);
-
-            //     try {
-            //         // Attempt to create Carbon instance
-            //         $carbonInstance = Carbon::createFromFormat('H:i:s', $uraianTugas['waktu']);
-            //         // Log the formatted datetime
-            //         \Log::info('Formatted datetime: ' . $carbonInstance->toDateTimeString());
-
-            //         $formulir->waktuUraianTugas()->create([
-            //             'waktu' => $carbonInstance->toTimeString(),
-            //             'uraian_tugas' => $uraianTugas['uraian_tugas'],
-            //         ]);
-            //     } catch (\Exception $e) {
-            //         // Log the exception
-            //         \Log::error('Error creating Carbon instance: ' . $e->getMessage());
-            //     }
-            // }
+            // simpan waktu dan uraian tugas
+            $formulir->waktuUraianTugas()->createMany(
+                array_map(function ($waktuUraianTugas) {
+                    return [
+                        'waktu' => Carbon::createFromFormat('H:i:s', $waktuUraianTugas['waktu']),
+                        'uraian_tugas' => $waktuUraianTugas['uraian_tugas'],
+                    ];
+                }, $request->waktu_uraian_tugas)
+            );
 
             // Simpan inventaris POS
             foreach ($request->inventaris_pos as $inventarisPos) {

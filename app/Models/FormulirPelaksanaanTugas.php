@@ -15,25 +15,6 @@ class FormulirPelaksanaanTugas extends Model
 
     protected $primaryKey = "id";
 
-    public function waktuUraianTugas(): HasMany
-    {
-        return $this->hasMany(WaktuUraianTugas::class, 'formulir_pelaksanaan_tugas_id');
-    }
-
-    public function waktu_uraian_tugas()
-    {
-        return $this->hasMany(WaktuUraianTugas::class);
-    }
-    public function posts(): HasMany
-    {
-        return $this->hasMany(Post::class);
-    }
-
-    public function inventarisPos(): HasMany
-    {
-        return $this->hasMany(InventarisPos::class, 'formulir_pelaksanaan_tugas_id');
-    }
-
     protected $fillable = [
         'users_id',
         'tanggal_kejadian',
@@ -43,6 +24,21 @@ class FormulirPelaksanaanTugas extends Model
         'uraian_tugas',
         'keterangan'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function waktuUraianTugas()
+    {
+        return $this->hasMany(WaktuUraianTugas::class);
+    }
+
+    public function inventarisPos(): HasMany
+    {
+        return $this->hasMany(InventarisPos::class, 'formulir_pelaksanaan_tugas_id');
+    }
 
     protected $dates = ['deleted_at'];
 
@@ -64,11 +60,6 @@ class FormulirPelaksanaanTugas extends Model
     public function m_barang_inventaris()
     {
         return $this->belongsTo(MBarangInventaris::class);
-    }
-
-    public function user()
-    {
-        return $this->belongsTo(User::class);
     }
 
     public function updateFormulirPelaksanaanTugas(array $data)
