@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('formulir_pelaksanaan_tugas', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('users_id');
             $table->dateTime('tanggal_kejadian');
             $table->unsignedBigInteger('m_pos_id');
             $table->unsignedBigInteger('m_sipam_id');
@@ -24,7 +24,7 @@ return new class extends Migration {
             $table->string('updated_by')->nullable();
             $table->string('deleted_by')->nullable();
 
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('users_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('m_pos_id')->references('id')->on('m_pos')->onDelete('cascade');
             $table->foreign('m_sipam_id')->references('id')->on('m_sipam')->onDelete('cascade');
             $table->foreign('m_shift_id')->references('id')->on('m_shift')->onDelete('cascade');

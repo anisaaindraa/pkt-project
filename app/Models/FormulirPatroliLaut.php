@@ -12,6 +12,8 @@ class FormulirPatroliLaut extends Model
 {
     use HasFactory, softDeletes;
 
+    protected $table = 'formulir_patroli_laut';
+
     public function photoPatroliLaut(): HasMany
     {
         return $this->hasMany(PhotoPatroliLaut::class, 'formulir_patroli_laut_id');
@@ -21,8 +23,6 @@ class FormulirPatroliLaut extends Model
     {
         return $this->hasMany(Post::class);
     }
-
-    protected $table = 'formulir_patroli_laut';
 
     protected $primaryKey = 'id';
 

@@ -10,6 +10,8 @@ class PhotoPatroliLaut extends Model
 {
     use HasFactory;
 
+    protected $table = 'photo_patroli_laut';
+
     public function formulirPatroliLaut(): BelongsTo
     {
         return $this->belongsTo(FormulirPatroliLaut::class, 'formulir_patroli_laut_id');

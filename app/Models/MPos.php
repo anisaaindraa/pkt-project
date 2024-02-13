@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class MPos extends Model
 {
     use HasFactory;
+
+    protected $table = "m_pos";
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\FormulirPatroliLaut;
+use App\Models\FormulirPelaksanaanTugas;
 use App\Models\FormulirPelaporanKejadian;
 use App\Models\MShift;
 use App\Models\PhotoPatroliLaut;
@@ -157,6 +158,103 @@ class APIController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Terjadi kesalahan saat membuat formulir pelaporan kejadian',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function createFormulirPelaksanaanTugas(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'users_id' => ['required', 'integer', 'exists:users,id'],
+            'tanggal_kejadian' => ['required', 'date'],
+            'm_pos_id' => ['required', 'integer', 'exists:m_pos,id'],
+            'm_sipam_id' => ['required', 'integer', 'exists:m_sipam,id'],
+            'm_shift_id' => ['required', 'integer', 'exists:m_shift,id'],
+            'waktu_uraian_tugas' => ['required', 'array'],
+            'waktu_uraian_tugas.*.waktu' => ['required', 'date_format:H:i'],
+            'waktu_uraian_tugas.*.uraian_tugas' => ['required', 'string'],
+            'keterangan' => ['required', 'string'],
+            'inventaris_pos' => [
+                'required',
+                'array',
+                function ($attribute, $value, $fail) {
+                    foreach ($value as $item) {
+                        // Periksa setiap item dalam array
+                        if (
+                            !isset($item['m_barang_inventaris_id']) ||
+                            !isset($item['jumlah']) ||
+                            !isset($item['keterangan'])
+                        ) {
+                            // Jika ada item yang tidak lengkap, kirim pesan kesalahan
+                            $fail("Setiap barang inventaris harus memiliki ID, jumlah, dan keterangan.");
+                            return;
+                        }
+                    }
+                },
+            ],
+            'inventaris_pos.*.m_barang_inventaris_id' => ['required', 'integer', 'exists:m_barang_inventaris,id'],
+            'inventaris_pos.*.jumlah' => ['required', 'integer'],
+            'inventaris_pos.*.keterangan' => ['required', 'string'],
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+
+        try {
+            // Format the 'tanggal_kejadian' using Carbon
+            $formattedTanggalKejadian = Carbon::parse($request->tanggal_kejadian)->format('Y-m-d');
+
+            // Simpan data formulir pelaksanaan tugas ke dalam database
+            $formulir = FormulirPelaksanaanTugas::create([
+                'users_id' => $request->users_id,
+                'tanggal_kejadian' => $formattedTanggalKejadian,
+                'm_pos_id' => $request->m_pos_id,
+                'm_sipam_id' => $request->m_sipam_id,
+                'm_shift_id' => $request->m_shift_id,
+                'keterangan' => $request->keterangan,
+            ]);
+
+            // Simpan waktu dan uraian tugas
+            // foreach ($request->waktu_uraian_tugas as $uraianTugas) {
+            //     // Log the 'waktu' value
+            //     \Log::info('Waktu value: ' . $uraianTugas['waktu']);
+
+            //     try {
+            //         // Attempt to create Carbon instance
+            //         $carbonInstance = Carbon::createFromFormat('H:i:s', $uraianTugas['waktu']);
+            //         // Log the formatted datetime
+            //         \Log::info('Formatted datetime: ' . $carbonInstance->toDateTimeString());
+
+            //         $formulir->waktuUraianTugas()->create([
+            //             'waktu' => $carbonInstance->toTimeString(),
+            //             'uraian_tugas' => $uraianTugas['uraian_tugas'],
+            //         ]);
+            //     } catch (\Exception $e) {
+            //         // Log the exception
+            //         \Log::error('Error creating Carbon instance: ' . $e->getMessage());
+            //     }
+            // }
+
+            // Simpan inventaris POS
+            foreach ($request->inventaris_pos as $inventarisPos) {
+                $formulir->inventarisPos()->create([
+                    'm_barang_inventaris_id' => $inventarisPos['m_barang_inventaris_id'],
+                    'jumlah' => $inventarisPos['jumlah'],
+                    'keterangan' => $inventarisPos['keterangan'],
+                ]);
+            }
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Formulir pelaksanaan tugas berhasil dibuat',
+                'data' => $formulir,
+            ], 201);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Terjadi kesalahan saat membuat formulir pelaksanaan tugas',
                 'error' => $e->getMessage(),
             ], 500);
         }

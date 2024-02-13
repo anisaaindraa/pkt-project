@@ -32,4 +32,5 @@ Route::middleware(['auth.api'])->group(function () {
 
 Route::post('formpatrolilaut', [APIController::class, 'createFormulirPatroliLaut']);
 Route::post('formpelaporankejadian', [APIController::class, 'createFormulirPelaporanKejadian']);
+Route::post('formpelaksanaantugas', [APIController::class, 'createFormulirPelaksanaanTugas']);
 

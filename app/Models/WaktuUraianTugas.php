@@ -8,4 +8,19 @@ use Illuminate\Database\Eloquent\Model;
 class WaktuUraianTugas extends Model
 {
     use HasFactory;
+
+    protected $table = 'waktu_uraian_tugas';
+
+    protected $primaryKey = 'id';
+
+    protected $fillable = [
+        'formulir_pelaksanaan_tugas_id',
+        'waktu',
+        'uraian_tugas'
+    ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
