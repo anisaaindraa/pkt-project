@@ -3,8 +3,9 @@ import React from 'react';
 import { InertiaLink } from '@inertiajs/inertia-react';
 
 const DataTableKejadian = ({ formulir_pelaporan_kejadian }) => {
+  console.log('Formulir Pelaporan Kejadian Data:', formulir_pelaporan_kejadian);
+  
   return (
-    // console.log(formulir_pelaporan_kejadian) 
     <div className="container mx-auto mt-8">
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-3xl font-semibold">Data Formulir Pelaporan Kejadian</h1>
@@ -17,8 +18,8 @@ const DataTableKejadian = ({ formulir_pelaporan_kejadian }) => {
             <th className="py-2 px-4 border-b">Tanggal Kejadian</th>
             <th className="py-2 px-4 border-b">Waktu Kejadian</th>
             <th className="py-2 px-4 border-b">Tempat Kejadian</th>
-            {/* <th className="py-2 px-4 border-b">Korban</th>
-            <th className="py-2 px-4 border-b">Pelaku</th> */}
+            <th className="py-2 px-4 border-b">Korban</th>
+            <th className="py-2 px-4 border-b">Pelaku</th>
             <th className="py-2 px-4 border-b">Actions</th>
           </tr>
         </thead>
@@ -31,10 +32,28 @@ const DataTableKejadian = ({ formulir_pelaporan_kejadian }) => {
                 <td className="py-2 px-4 text-center">{formulir.tanggal_kejadian}</td>
                 <td className="py-2 px-4 text-center">{formulir.waktu_kejadian}</td>
                 <td className="py-2 px-4 text-center">{formulir.tempat_kejadian}</td>
-                {/* <td className="py-2 px-4 text-center">{formulir.korban.map((k) => k.nama_korban).join(', ')}</td>
-                <td className="py-2 px-4 text-center">{formulir.pelaku.map((p) => p.nama_pelaku).join(', ')}</td> */}
+                <td className="py-2 px-4 text-center">
+                  {formulir.korban ? formulir.korban.map((k) => k.nama_korban).join(', ') : 'No Korban'}
+                </td>
+                <td className="py-2 px-4 text-center">
+                  {formulir.pelaku ? formulir.pelaku.map((p) => p.nama_pelaku).join(', ') : 'No Pelaku'}
+                </td>
                 <td className="py-2 px-4 flex items-center justify-center space-x-2">
-                  {/* Actions buttons */}
+                  {/* Edit Button */}
+                  <InertiaLink
+                    href={`/edit-kejadian/${formulir.id}`}
+                    className="bg-blue-500 text-white px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-blue"
+                  >
+                    Edit
+                  </InertiaLink>
+
+                  {/* Delete Button */}
+                  <button
+                    onClick={() => handleDelete(formulir.id)}
+                    className="bg-red-500 text-white px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-red"
+                  >
+                    Delete
+                  </button>
                 </td>
               </tr>
             ))}

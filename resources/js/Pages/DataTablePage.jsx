@@ -73,10 +73,6 @@ const DataTablePage = ({ users }) => {
           ))}
         </tbody>
       </table>
-
-      <InertiaLink href="/dashboard" className="mt-4 inline-block px-4 py-2 bg-gray-500 text-white rounded-md">
-        Back to Dashboard
-      </InertiaLink>
     </div>
   );
 };

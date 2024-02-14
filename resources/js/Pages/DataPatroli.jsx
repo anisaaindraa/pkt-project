@@ -20,12 +20,6 @@ const DataTablePatroli = ({ formulir_patroli_laut }) => {
     <div className="container mx-auto mt-8">
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-3xl font-semibold">Data Formulir Hasil Patroli Laut</h1>
-        <InertiaLink
-            href={route('formulirpatrolilaut.create')}
-            className="bg-green-500 text-white px-4 py-2 rounded-md"
-          >
-            Create
-          </InertiaLink>
       </div>
       <table className="min-w-full border border-gray-300">
         <thead className="bg-gray-200">
@@ -46,11 +40,11 @@ const DataTablePatroli = ({ formulir_patroli_laut }) => {
             <tr key={formulir_patroli_laut.id} className="border-b">
               <td className="py-2 px-4">{formulir_patroli_laut.id}</td>
               <td className="py-2 px-4">{formulir_patroli_laut.tanggal_kejadian}</td>
-              <td className="py-2 px-4">{formulir_patroli_laut.m_shift_id && formulir_patroli_laut.m_shift_id.nama_shift}</td>
+              <td className="py-2 px-4">{formulir_patroli_laut.m_shift && formulir_patroli_laut.m_shift.nama_shift}</td>
               <td className="py-2 px-4">{formulir_patroli_laut.uraian_hasil}</td>
               <td className="py-2 px-4">
                 {formulir_patroli_laut.photoPatroliLauts && formulir_patroli_laut.photoPatroliLauts.map((photo) => (
-                  <img key={photo.id} src={photo.url} alt={`Photo ${photo.id}`} className="max-w-full mb-2" />
+                <img key={photo.id} src={photo.url} alt={`Photo ${photo.id}`} className="max-w-full mb-2" />
                 ))}
               </td>
               <td className="py-2 px-4">{formulir_patroli_laut.keterangan}</td>
@@ -76,9 +70,6 @@ const DataTablePatroli = ({ formulir_patroli_laut }) => {
           ))}
         </tbody>
       </table>
-      <InertiaLink href="/dashboard" className="mt-4 inline-block px-4 py-2 bg-gray-500 text-white rounded-md">
-        Back to Dashboard
-      </InertiaLink>
     </div>
   );
 };

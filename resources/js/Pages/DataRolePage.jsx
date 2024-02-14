@@ -116,9 +116,6 @@ const DataRolePage = ({ roles, permission }) => {
       </table>
 
       {/* Tombol kembali ke dashboard */}
-      <InertiaLink href="/dashboard" className="block bg-gray-500 text-white px-4 py-2 w-fit rounded-md mt-4">
-        Back to Dashboard
-      </InertiaLink>
       <Modal show={isModalOpen} onClose={handleCloseModal}>
         {/* Isi modal Assign Permission */}
         <div className="p-6 bg-white rounded-lg shadow-xl">
