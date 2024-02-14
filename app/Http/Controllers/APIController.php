@@ -59,7 +59,7 @@ class APIController extends Controller
             'm_shift_id' => ['required', 'integer', 'exists:m_shift,id'],
             'uraian_hasil' => ['required', 'string'],
             'keterangan' => ['required', 'string'],
-            'photo' => ['required', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048'], // Contoh validasi foto (gunakan yang sesuai)
+            'photo_patroli_laut.*.photo_path' => ['required', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048'],
         ]);
 
         if ($validator->fails()) {
@@ -76,14 +76,8 @@ class APIController extends Controller
                 'keterangan' => $request->keterangan,
             ]);
 
-            if ($request->hasFile('photo')) {
-                $photos = [];
-                foreach ($request->file('photo') as $file) {
-                    $photoPath = $file->store('photos');
-                    $photos[] = ['photo_path' => $photoPath];
-                }
-                $formulir->photoPatroliLaut()->createMany($photos);
-            }
+            // Use createMany directly on PhotoPatroliLaut
+            $formulir->photoPatroliLaut()->createMany($request->photo_patroli_laut);
 
             return response()->json([
                 'success' => true,

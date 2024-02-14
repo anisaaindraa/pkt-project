@@ -15,6 +15,7 @@ return new class extends Migration {
             $table->unsignedBigInteger('formulir_patroli_laut_id');
             $table->string('photo_path');
             $table->softDeletes();
+            $table->timestamps();
             $table->string('created_by')->nullable();
             $table->string('updated_by')->nullable();
             $table->string('deleted_by')->nullable();
@@ -30,4 +31,6 @@ return new class extends Migration {
     {
         Schema::dropIfExists('photo_patroli_laut');
     }
+
+
 };
