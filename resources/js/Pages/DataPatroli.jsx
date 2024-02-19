@@ -1,10 +1,12 @@
 import React from 'react';
 import { InertiaLink } from '@inertiajs/inertia-react';
+import { Inertia } from '@inertiajs/inertia';
 
 const DataTablePatroli = ({ formulir_patroli_laut }) => {
-  const handleDelete = (id) => {
+  const handleDelete = async (id) => {
+  try{
     if (confirm('Apakah Anda yakin ingin menghapus data patroli ini?')) {
-      Inertia.post(route('delete.data.patroli', { id }), {}, {
+     await Inertia.delete(route('formulirpatrolilaut.destroy', { id }), {}, {
         onSuccess: () => {
           console.log(`Data Patroli dengan ID ${id} berhasil dihapus`);
           Inertia.reload();
@@ -14,8 +16,12 @@ const DataTablePatroli = ({ formulir_patroli_laut }) => {
         },
       });
     }
+  }catch (error){
+    console.error('Error deleting form:', error);
+  }
   };
 
+  console.log("Data Formulir Patroli Laut:", formulir_patroli_laut);
   return (
     <div className="container mx-auto mt-8">
       <div className="flex justify-between items-center mb-4">

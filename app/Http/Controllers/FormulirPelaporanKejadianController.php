@@ -80,14 +80,8 @@ class FormulirPelaporanKejadianController extends Controller
 
     public function destroy($id)
     {
-        $formulir = FormulirPelaporanKejadian::find($id);
-
-        if (!$formulir) {
-            return response()->json(['message' => 'Formulir not found'], 404);
-        }
-
-        $formulir->delete();
-
-        return response()->json(['message' => 'Formulir deleted']);
+        $formulir_patroli_laut = FormulirPelaporanKejadian::findOrFail($id);
+        $formulir_patroli_laut->delete();
+        // return redirect()->route('dataPatroli');
     }
 }

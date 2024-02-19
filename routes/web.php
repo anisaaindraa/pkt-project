@@ -76,6 +76,10 @@ Route::delete('/formulirpatrolilaut/{id}/destroy', [FormulirPatroliLautControlle
 
 // Formulir Pelaporan Kejadian Controller
 Route::get('/datakejadian', [FormulirPelaporanKejadianController::class, 'datakejadian'])->name('datakejadian');
+Route::post('/createformulirpelaporankejadian', [FormulirPelaporanKejadianController::class, 'store'])->name('formulirpelaporankejadian.store');
+Route::get('formulirpelaporankejadian/{id}/edit', [FormulirPelaporanKejadianController::class, 'edit'])->name('formulirpelaporankejadian.edit')->middleware(['auth']);
+Route::put('formulirpelaporankejadian/{id}', [FormulirPelaporanKejadianController::class, 'update'])->name('formulirpelaporankejadian.update')->middleware(['auth']);
+Route::delete('/formulirpelaporankejadian/{id}/destroy', [FormulirPelaporanKejadianController::class, 'destroy'])->name('formulirpelaporankejadian.destroy');
 
 
 Route::get('test', function () {

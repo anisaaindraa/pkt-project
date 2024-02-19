@@ -1,9 +1,27 @@
-// DataTableKejadian.jsx
 import React from 'react';
 import { InertiaLink } from '@inertiajs/inertia-react';
+import { Inertia } from '@inertiajs/inertia';
 
 const DataTableKejadian = ({ formulir_pelaporan_kejadian }) => {
-  console.log('Formulir Pelaporan Kejadian Data:', formulir_pelaporan_kejadian);
+  // console.log('Formulir Pelaporan Kejadian Data:', formulir_pelaporan_kejadian);
+
+  const handleDelete = async (id) => {
+    try{
+      if (confirm('Apakah Anda yakin ingin menghapus data pelaporan kejadian ini?')) {
+       await Inertia.delete(route('formulirpelaporankejadian.destroy', { id }), {}, {
+          onSuccess: () => {
+            console.log(`Data Pelaporan Kejadian dengan ID ${formulir.id} berhasil dihapus`);
+            Inertia.reload();
+          },
+          onError: (error) => {
+            console.error(`Terjadi kesalahan saat menghapus data pelaporan kejadian: ${error.message}`);
+          },
+        });
+      }
+    }catch (error){
+      console.error('Error deleting form:', error);
+    }
+    };
   
   return (
     <div className="container mx-auto mt-8">
@@ -39,15 +57,12 @@ const DataTableKejadian = ({ formulir_pelaporan_kejadian }) => {
                   {formulir.pelaku ? formulir.pelaku.map((p) => p.nama_pelaku).join(', ') : 'No Pelaku'}
                 </td>
                 <td className="py-2 px-4 flex items-center justify-center space-x-2">
-                  {/* Edit Button */}
                   <InertiaLink
                     href={`/edit-kejadian/${formulir.id}`}
                     className="bg-blue-500 text-white px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-blue"
                   >
                     Edit
                   </InertiaLink>
-
-                  {/* Delete Button */}
                   <button
                     onClick={() => handleDelete(formulir.id)}
                     className="bg-red-500 text-white px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-red"

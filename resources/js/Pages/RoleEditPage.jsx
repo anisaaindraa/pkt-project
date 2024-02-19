@@ -1,5 +1,3 @@
-// RoleEditPage.jsx
-
 import React, { useEffect, useState } from 'react';
 import { Inertia } from '@inertiajs/inertia';
 
@@ -24,7 +22,6 @@ const RoleEditPage = ({ role, updateUrl }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       await Inertia.put(updateUrl, formData, {
         onSuccess: () => {
@@ -59,8 +56,6 @@ const RoleEditPage = ({ role, updateUrl }) => {
               className="border rounded-md px-3 py-2 w-full"
             />
           </div>
-
-          {/* Submit Button */}
           <div className="mb-6 text-center">
             <button
               type="submit"

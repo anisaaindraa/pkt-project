@@ -116,8 +116,8 @@ class FormulirPatroliLautController extends Controller
 
     public function destroy($id)
     {
-        $formulir_patroli_laut = FormulirPatroliLautController::findOrFail($id);
+        $formulir_patroli_laut = FormulirPatroliLaut::findOrFail($id);
         $formulir_patroli_laut->delete();
-        return redirect()->route('dataPatroli');
+        // return redirect()->route('dataPatroli');
     }
 }

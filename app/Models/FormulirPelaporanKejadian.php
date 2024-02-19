@@ -23,6 +23,7 @@ class FormulirPelaporanKejadian extends Model
         'kerugian_akibat_kejadian',
         'keterangan_lain',
     ];
+    protected $dates = ['deleted_at'];
 
     public function user()
     {
@@ -37,6 +38,15 @@ class FormulirPelaporanKejadian extends Model
     public function pelaku()
     {
         return $this->hasMany(Pelaku::class);
+    }
+
+    public function updateFormulirPelaporanKejadian(array $data)
+    {
+        // Sesuaikan dengan nama kolom di tabel database
+        $this->fill($data);
+        // Simpan perubahan
+        $this->save();
+        return $this;
     }
 
 }
