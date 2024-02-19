@@ -23,6 +23,7 @@ const DataTableKejadian = ({ formulir_pelaporan_kejadian }) => {
     }
     };
   
+  console.log("Data Formulir Pelaporan Kejadian:", formulir_pelaporan_kejadian);
   return (
     <div className="container mx-auto mt-8">
       <div className="flex justify-between items-center mb-4">
@@ -36,6 +37,8 @@ const DataTableKejadian = ({ formulir_pelaporan_kejadian }) => {
             <th className="py-2 px-4 border-b">Tanggal Kejadian</th>
             <th className="py-2 px-4 border-b">Waktu Kejadian</th>
             <th className="py-2 px-4 border-b">Tempat Kejadian</th>
+            <th className="py-2 px-4 border-b">Kerugian Akibat Kejadian</th>
+            <th className="py-2 px-4 border-b">Keterangan Lain</th>
             <th className="py-2 px-4 border-b">Korban</th>
             <th className="py-2 px-4 border-b">Pelaku</th>
             <th className="py-2 px-4 border-b">Actions</th>
@@ -50,6 +53,8 @@ const DataTableKejadian = ({ formulir_pelaporan_kejadian }) => {
                 <td className="py-2 px-4 text-center">{formulir.tanggal_kejadian}</td>
                 <td className="py-2 px-4 text-center">{formulir.waktu_kejadian}</td>
                 <td className="py-2 px-4 text-center">{formulir.tempat_kejadian}</td>
+                <td className="py-2 px-4 text-center">{formulir.kerugian_akibat_kejadian}</td>
+                <td className="py-2 px-4 text-center">{formulir.keterangan_lain}</td>
                 <td className="py-2 px-4 text-center">
                   {formulir.korban ? formulir.korban.map((k) => k.nama_korban).join(', ') : 'No Korban'}
                 </td>
@@ -57,12 +62,12 @@ const DataTableKejadian = ({ formulir_pelaporan_kejadian }) => {
                   {formulir.pelaku ? formulir.pelaku.map((p) => p.nama_pelaku).join(', ') : 'No Pelaku'}
                 </td>
                 <td className="py-2 px-4 flex items-center justify-center space-x-2">
-                  <InertiaLink
-                    href={`/edit-kejadian/${formulir.id}`}
-                    className="bg-blue-500 text-white px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-blue"
-                  >
-                    Edit
-                  </InertiaLink>
+                <InertiaLink
+                  href={route('formulirpelaporankejadian.edit', { id: formulir.id })}
+                  className="bg-blue-500 text-white px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-blue"
+                >
+                Edit
+                </InertiaLink>
                   <button
                     onClick={() => handleDelete(formulir.id)}
                     className="bg-red-500 text-white px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-red"

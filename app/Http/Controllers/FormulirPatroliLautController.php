@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\MShift;
 use App\Models\PhotoPatroliLaut;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -13,37 +14,41 @@ class FormulirPatroliLautController extends Controller
 {
     public function index()
     {
-        $formulirs = FormulirPatroliLaut::all();
-        return response()->json(['dataPatroli' => $formulirs]);
+        $formulir = FormulirPatroliLaut::all();
+        return response()->json(['dataPatroli' => $formulir]);
     }
 
     public function dataPatroli()
     {
-        $formulir_patroli_laut = FormulirPatroliLaut::all();
-        return Inertia::render('DataTablePatroli', ['formulir_patroli_laut' => $formulir_patroli_laut]);
+        $formulir = FormulirPatroliLaut::with('photo_patroli_laut', 'm_shift')->get();
+        return Inertia::render('DataTablePatroli', ['formulir_patroli_laut' => $formulir]);
     }
 
-    public function create()
+    public function show($id)
     {
-        // Mendapatkan daftar role untuk form
-        $shift = MShift::all();
-        $storeUrl = route('formulirpatrolilaut.store');
+        $formulir = FormulirPatroliLaut::with('photoPatroliLauts')->find($id);
 
-        return inertia('PatroliCreatePage', [
-            'shift' => $shift,
-            'storeUrl' => $storeUrl
-        ]);
+        if (!$formulir) {
+            return response()->json(['message' => 'Formulir not found'], 404);
+        }
+
+        return response()->json(['dataPatroli' => $formulir]);
     }
+
 
     public function edit($id)
     {
         try {
-            $formulir_patroli_laut = FormulirPatroliLaut::findOrFail($id);
-            $shift = MShift::all();
+            $formulir = FormulirPatroliLaut::findOrFail($id);
+            $m_shift = MShift::all();
+            $photo = PhotoPatroliLaut::find($id);
+            $user = User::find($formulir->users_id);
 
             return Inertia::render('UserEditPage', [
-                'formulir_patroli_laut' => $formulir_patroli_laut,
-                'shift' => $shift,
+                'formulir_patroli_laut' => $formulir,
+                'm_shift' => $m_shift,
+                'photo' => $photo,
+                'user' => $user,
                 'updateUrl' => route('formulirpatrolilaut.update', ['id' => $id]),
             ]);
         } catch (\Exception $e) {
@@ -54,21 +59,21 @@ class FormulirPatroliLautController extends Controller
 
     public function update(Request $request, $id)
     {
-        $formulir_patroli_laut = FormulirPatroliLaut::findOrFail($id);
+        $formulir = FormulirPatroliLaut::findOrFail($id);
         $validatedData = $request->validate([
-            'users_id' => 'exists:users,id',
-            'tanggal_kejadian' => 'date',
-            'm_shift_id' => 'exists:m_shift,id',
-            'uraian_hasil' => 'string',
-            'keterangan' => 'string',
+            'users_id' => 'required|exists:users,id',
+            'tanggal_kejadian' => 'required|date',
+            'm_shift_id' => 'required|exists:m_shift,id',
+            'uraian_hasil' => 'required|string',
+            'keterangan' => 'required|string',
         ]);
 
         try {
             // Mengupdate data user
-            $formulir_patroli_laut->update($validatedData);
+            $formulir->update($validatedData);
 
             // Redirect back to the edit page with success message
-            return redirect()->route('formulirpatrolilaut.edit', $formulir_patroli_laut)->with('success', 'Formulir berhasil diupdate');
+            return redirect()->route('formulirpatrolilaut.edit', $formulir)->with('success', 'Formulir berhasil diupdate');
         } catch (\Exception $e) {
             // Handle errors
             return redirect()->back()->with('error', 'Terjadi kesalahan saat mengupdate Formulir');
@@ -86,8 +91,7 @@ class FormulirPatroliLautController extends Controller
         ]);
 
         try {
-            // Menambahkan data user baru ke dalam database
-            $user = FormulirPatroliLaut::create([
+            $request = FormulirPatroliLaut::create([
                 'users_id' => $request->users_id,
                 'tanggal_kejadian' => $request->tanggal_kejadian,
                 'm_shift_id' => $request->m_shift_id,
@@ -101,17 +105,6 @@ class FormulirPatroliLautController extends Controller
             // Tangani kesalahan
             return redirect()->route('formulirpatrolilaut.create')->with('error', 'Terjadi kesalahan saat menambahkan formulir');
         }
-    }
-
-    public function show($id)
-    {
-        $formulir_patroli_laut = FormulirPatroliLaut::with('photoPatroliLauts')->find($id);
-
-        if (!$formulir_patroli_laut) {
-            return response()->json(['message' => 'Formulir not found'], 404);
-        }
-
-        return response()->json(['dataPatroli' => $formulir_patroli_laut]);
     }
 
     public function destroy($id)

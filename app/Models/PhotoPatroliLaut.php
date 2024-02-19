@@ -24,4 +24,10 @@ class PhotoPatroliLaut extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function formulirPatroliLaut()
+    {
+        return $this->belongsTo(FormulirPatroliLaut::class);
+    }
+
 }

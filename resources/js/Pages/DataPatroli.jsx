@@ -46,13 +46,13 @@ const DataTablePatroli = ({ formulir_patroli_laut }) => {
             <tr key={formulir_patroli_laut.id} className="border-b">
               <td className="py-2 px-4">{formulir_patroli_laut.id}</td>
               <td className="py-2 px-4">{formulir_patroli_laut.tanggal_kejadian}</td>
-              <td className="py-2 px-4">{formulir_patroli_laut.m_shift && formulir_patroli_laut.m_shift.nama_shift}</td>
+              <td className="py-2 px-4">{formulir_patroli_laut.shift && formulir_patroli_laut.shift.nama_shift}</td>
               <td className="py-2 px-4">{formulir_patroli_laut.uraian_hasil}</td>
               <td className="py-2 px-4">
-                {formulir_patroli_laut.photoPatroliLauts && formulir_patroli_laut.photoPatroliLauts.map((photo) => (
-                <img key={photo.id} src={photo.url} alt={`Photo ${photo.id}`} className="max-w-full mb-2" />
+                {formulir_patroli_laut.photos && formulir_patroli_laut.photos.map((photo) => (
+                  <img key={photo.id} src={photo.url} alt={`Photo ${photo.id}`} className="max-w-full mb-2" />
                 ))}
-              </td>
+            </td>
               <td className="py-2 px-4">{formulir_patroli_laut.keterangan}</td>
               <td className="py-2 px-4">{formulir_patroli_laut.created_at}</td>
               <td className="py-2 px-4">{formulir_patroli_laut.updated_at}</td>

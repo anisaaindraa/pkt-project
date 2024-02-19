@@ -56,7 +56,7 @@ export default function UserEditPage(props) {
       <div className="w-full max-w-md">
         <h1 className="text-3xl font-semibold mb-4 text-center">Edit User</h1>
         <form onSubmit={handleSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-          {/* Role Dropdown */}
+  
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="role_id">
               Role:
@@ -76,9 +76,6 @@ export default function UserEditPage(props) {
             </select>
           </div>
 
-          {/* Other Form Fields */}
-          {/* Add other form fields here, similar to the example below */}
-          {/* Replace 'inputField' with your actual form field names */}
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
               Username:
