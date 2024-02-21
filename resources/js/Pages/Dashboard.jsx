@@ -1,60 +1,69 @@
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head } from '@inertiajs/react';
-import { InertiaLink } from '@inertiajs/inertia-react';
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import { Head, Link } from "@inertiajs/react";
+// import { InertiaLink } from "@inertiajs/inertia-react";
 
 export default function Dashboard({ auth }) {
-  return (
-    <AuthenticatedLayout
-      user={auth.user}
-      header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Dashboard</h2>}
-    >
-      <Head title="Dashboard" />
-      <div className="py-12">
-        <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-            {/* Data Table User Card */}
-            <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
-              <h3 className="text-xl font-semibold mb-4">Data Table User</h3>
-              <InertiaLink href='/datatable' className="text-blue-500 hover:underline">
-                Go to Data Table User
-              </InertiaLink>
+    return (
+        <AuthenticatedLayout>
+            <div className="border-2 border-gray-200 rounded-lg dark:border-gray-700 p-4 mb-4">
+                <h3 className="text-3xl text-blue-950 font-bold">
+                    Hi, selamat datang admin!
+                </h3>
             </div>
 
-            {/* Data Formulir Patroli Laut Card */}
-            <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
-              <h3 className="text-xl font-semibold mb-4">Data Formulir Patroli Laut</h3>
-              <InertiaLink href='/patroli' className="text-blue-500 hover:underline">
-                Go to Data Formulir Patroli Laut
-              </InertiaLink>
+            <div className="flex gap-4">
+                <a
+                    href="#"
+                    class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
+                >
+                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                        Noteworthy technology acquisitions 2021
+                    </h5>
+                    <p class="font-normal text-gray-700 dark:text-gray-400">
+                        Here are the biggest enterprise technology acquisitions
+                        of 2021 so far, in reverse chronological order.
+                    </p>
+                </a>
+
+                <a
+                    href="#"
+                    class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
+                >
+                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                        Noteworthy technology acquisitions 2021
+                    </h5>
+                    <p class="font-normal text-gray-700 dark:text-gray-400">
+                        Here are the biggest enterprise technology acquisitions
+                        of 2021 so far, in reverse chronological order.
+                    </p>
+                </a>
+
+                <a
+                    href="#"
+                    class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
+                >
+                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                        Noteworthy technology acquisitions 2021
+                    </h5>
+                    <p class="font-normal text-gray-700 dark:text-gray-400">
+                        Here are the biggest enterprise technology acquisitions
+                        of 2021 so far, in reverse chronological order.
+                    </p>
+                </a>
+
+                <a
+                    href="#"
+                    class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
+                >
+                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                        Noteworthy technology acquisitions 2021
+                    </h5>
+                    <p class="font-normal text-gray-700 dark:text-gray-400">
+                        Here are the biggest enterprise technology acquisitions
+                        of 2021 so far, in reverse chronological order.
+                    </p>
+                </a>
             </div>
-
-            {/* Data Formulir Pelaksanaan Tugas Card */}
-            <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
-              <h3 className="text-xl font-semibold mb-4">Data Formulir Pelaksanaan Tugas</h3>
-              <InertiaLink href='/tugas' className="text-blue-500 hover:underline">
-                Go to Data Formulir Pelaksanaan Tugas
-              </InertiaLink>
-            </div>
-
-            {/* Data Formulir Pelaporan Kejadian Card */}
-            <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
-              <h3 className="text-xl font-semibold mb-4">Data Formulir Pelaporan Kejadian</h3>
-              <InertiaLink href='/datakejadian' className="text-blue-500 hover:underline">
-                Go to Data Formulir Pelaporan Kejadian
-              </InertiaLink>
-            </div>
-
-            {/* Data Role Card */}
-            {/* <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
-              <h3 className="text-xl font-semibold mb-4">Role</h3>
-              <InertiaLink href='/dataroles' className="text-blue-500 hover:underline">
-                Go to Role
-              </InertiaLink>
-            </div> */}
-
-          </div>
-        </div>
-      </div>
-    </AuthenticatedLayout>
-  );
+        </AuthenticatedLayout>
+    );
 }
