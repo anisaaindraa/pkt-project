@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "@inertiajs/inertia-react";
+import { Link } from "@inertiajs/react";
 import { Inertia } from "@inertiajs/inertia";
 
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
@@ -10,16 +10,9 @@ const DataTablePatroli = ({ formulir_patroli_laut }) => {
             if (
                 confirm("Apakah Anda yakin ingin menghapus data patroli ini?")
             ) {
-                await Inertia.delete(
+                const response = await Inertia.delete(
                     route("formulirpatrolilaut.destroy", { id }),
-                    {},
                     {
-                        onSuccess: () => {
-                            console.log(
-                                `Data Patroli dengan ID ${id} berhasil dihapus`
-                            );
-                            Inertia.reload();
-                        },
                         onError: (error) => {
                             console.error(
                                 `Terjadi kesalahan saat menghapus data patroli: ${error.message}`
@@ -27,6 +20,13 @@ const DataTablePatroli = ({ formulir_patroli_laut }) => {
                         },
                     }
                 );
+
+                if (response && response.status === "success") {
+                    console.log(
+                        `Data Patroli dengan ID ${id} berhasil dihapus`
+                    );
+                    Inertia.reload();
+                }
             }
         } catch (error) {
             console.error("Error deleting form:", error);
@@ -46,43 +46,49 @@ const DataTablePatroli = ({ formulir_patroli_laut }) => {
                     <thead className="bg-gray-200">
                         <tr>
                             <th className="py-2 px-4 border-b">Nomor</th>
-                            <th className="py-2 px-4 border-b">Hari/Tanggal</th>
+                            <th className="py-2 px-4 border-b">
+                                Hari/Tanggal Temuan
+                            </th>
+                            <th className="py-2 px-4 border-b">Petugas</th>
+
                             <th className="py-2 px-4 border-b">Shift</th>
                             <th className="py-2 px-4 border-b">
                                 Uraian Hasil Patroli
                             </th>
-                            <th className="py-2 px-4 border-b">Photos</th>
+
+                            <th className="py-2 px-4 border-b">
+                                Status Laporan
+                            </th>
+
                             <th className="py-2 px-4 border-b">Keterangan</th>
-                            <th className="py-2 px-4 border-b">Created At</th>
-                            <th className="py-2 px-4 border-b">Updated At</th>
+
                             <th className="py-2 px-4 border-b">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         {formulir_patroli_laut &&
                             formulir_patroli_laut.map(
-                                (formulir_patroli_laut) => (
+                                (formulir_patroli_laut, idx) => (
                                     <tr
                                         key={formulir_patroli_laut.id}
                                         className="border-b"
                                     >
-                                        <td className="py-2 px-4">
-                                            {formulir_patroli_laut.id}
-                                        </td>
+                                        <td className="py-2 px-4">{idx + 1}</td>
                                         <td className="py-2 px-4">
                                             {
                                                 formulir_patroli_laut.tanggal_kejadian
                                             }
                                         </td>
                                         <td className="py-2 px-4">
-                                            {formulir_patroli_laut.shift &&
-                                                formulir_patroli_laut.shift
-                                                    .nama_shift}
+                                            {formulir_patroli_laut.nama_user}
+                                        </td>
+                                        <td className="py-2 px-4">
+                                            {formulir_patroli_laut.nama_shift}
                                         </td>
                                         <td className="py-2 px-4">
                                             {formulir_patroli_laut.uraian_hasil}
                                         </td>
-                                        <td className="py-2 px-4">
+                                        {/* <td className="py-2 px-4">
                                             {formulir_patroli_laut.photos &&
                                                 formulir_patroli_laut.photos.map(
                                                     (photo) => (
@@ -94,16 +100,18 @@ const DataTablePatroli = ({ formulir_patroli_laut }) => {
                                                         />
                                                     )
                                                 )}
-                                        </td>
+                                        </td> */}
+
                                         <td className="py-2 px-4">
-                                            {formulir_patroli_laut.keterangan}
+                                            {formulir_patroli_laut.status}
                                         </td>
+
                                         <td className="py-2 px-4">
-                                            {formulir_patroli_laut.created_at}
+                                            {
+                                                formulir_patroli_laut.keterangan_formulir_patroli_laut
+                                            }
                                         </td>
-                                        <td className="py-2 px-4">
-                                            {formulir_patroli_laut.updated_at}
-                                        </td>
+
                                         <td className="py-2 px-4">
                                             <div className="flex">
                                                 <Link

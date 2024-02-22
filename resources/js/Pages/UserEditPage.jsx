@@ -1,178 +1,207 @@
-import React, { useEffect, useState } from 'react';
-import { Inertia } from '@inertiajs/inertia';
+import React, { useEffect, useState } from "react";
+import { Inertia } from "@inertiajs/inertia";
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+
+import DateTimePickerMui from "@/Components/DateTimePickerMui";
 
 export default function UserEditPage(props) {
-  const [formData, setFormData] = useState({
-    role_id: '',
-    username: '',
-    email: '',
-    nama_user: '',
-    alamat_user: '',
-    pekerjaan_user: '',
-    npk_user: '',
-  });
-
-  useEffect(() => {
-    setFormData({
-      role_id: props.user.role_id,
-      username: props.user.username,
-      email: props.user.email,
-      nama_user: props.user.nama_user,
-      alamat_user: props.user.alamat_user,
-      pekerjaan_user: props.user.pekerjaan_user,
-      npk_user: props.user.npk_user,
+    const [formData, setFormData] = useState({
+        role_id: "",
+        username: "",
+        email: "",
+        nama_user: "",
+        alamat_user: "",
+        pekerjaan_user: "",
+        npk_user: "",
     });
-  }, [props.user]);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
+    useEffect(() => {
+        setFormData({
+            role_id: props.user.role_id,
+            username: props.user.username,
+            email: props.user.email,
+            nama_user: props.user.nama_user,
+            alamat_user: props.user.alamat_user,
+            pekerjaan_user: props.user.pekerjaan_user,
+            npk_user: props.user.npk_user,
+        });
+    }, [props.user]);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
+    };
 
-    try {
-      await Inertia.put(props.updateUrl, formData, {
-        onSuccess: () => {
-          console.log('success');
-          props.onUpdateUser(data);
-          Inertia.visit(route('users.edit'));
-        },
-        onError: (errors) => {
-          console.log('error', errors);
-        },
-      });
-    } catch (error) {
-      console.error('Error updating user:', error);
-    }
-  };
+    const handleSubmit = async (e) => {
+        e.preventDefault();
 
-  return (
-    <div className="flex items-center justify-center min-h-screen">
-      <div className="w-full max-w-md">
-        <h1 className="text-3xl font-semibold mb-4 text-center">Edit User</h1>
-        <form onSubmit={handleSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-  
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="role_id">
-              Role:
-            </label>
-            <select
-              name="role_id"
-              value={formData.role_id}
-              onChange={handleChange}
-              className="border rounded-md px-3 py-2 w-full"
-            >
-              <option value="">Select Role</option>
-              {props.roles.map((role) => (
-                <option key={role.id} value={role.id}>
-                  {role.nama_role}
-                </option>
-              ))}
-            </select>
-          </div>
+        try {
+            await Inertia.put(props.updateUrl, formData, {
+                onSuccess: () => {
+                    console.log("success");
+                    props.onUpdateUser(data);
+                    Inertia.visit(route("users.edit"));
+                },
+                onError: (errors) => {
+                    console.log("error", errors);
+                },
+            });
+        } catch (error) {
+            console.error("Error updating user:", error);
+        }
+    };
 
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
-              Username:
-            </label>
-            <input
-              type="text"
-              name="username"
-              value={formData.username}
-              onChange={handleChange}
-              className="border rounded-md px-3 py-2 w-full"
-            />
-            <br />
-          </div>
+    console.log("ISI PROPS", props);
 
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
-              Email:
-            </label>
-            <input
-              type="text"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              className="border rounded-md px-3 py-2 w-full"
-            />
-            <br />
-          </div>
+    return (
+        <AuthenticatedLayout>
+            <>
+                <h3 className="text-2xl text-blue-950 font-bold mb-6">
+                    Formulir Edit Patroli Laut
+                </h3>
 
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
-              Password:
-            </label>
-            <input
-              type="text"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              className="border rounded-md px-3 py-2 w-full"
-            />
-            <br />
-          </div>
+                <form>
+                    <div class="space-y-12">
+                        <div class="border-b border-gray-900/10 pb-12">
+                            <h2 class="text-base font-semibold leading-7 text-gray-900">
+                                Data Formulir
+                            </h2>
+                            <p class="mt-1 text-sm leading-6 text-gray-600">
+                                Merubah data formulir patroli laut.
+                            </p>
 
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="nama_user">
-              Nama User:
-            </label>
-            <input
-              type="text"
-              name="nama_user"
-              value={formData.nama_user}
-              onChange={handleChange}
-              className="border rounded-md px-3 py-2 w-full"
-            />
-            <br />
-          </div>
+                            <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                                <div className="flex col-span-full gap-4">
+                                    <div class="flex-1">
+                                        <label
+                                            htmlFor="user"
+                                            class="block text-lg font-medium leading-6 text-gray-900"
+                                        >
+                                            Petugas
+                                        </label>
+                                        <div class="mt-2">
+                                            <select
+                                                id="countries"
+                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                            >
+                                                <option>United States</option>
+                                                <option>Canada</option>
+                                                <option>France</option>
+                                                <option>Germany</option>
+                                            </select>
+                                        </div>
+                                    </div>
 
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="pekerjaan_user">
-              Pekerjaan:
-            </label>
-            <input
-              type="text"
-              name="pekerjaan_user"
-              value={formData.pekerjaan_user}
-              onChange={handleChange}
-              className="border rounded-md px-3 py-2 w-full"
-            />
-            <br />
-          </div>
+                                    <div class="flex-1">
+                                        <label
+                                            htmlFor="user"
+                                            class="block text-lg font-medium leading-6 text-gray-900"
+                                        >
+                                            Shift
+                                        </label>
+                                        <div class="mt-2">
+                                            <select
+                                                id="countries"
+                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                            >
+                                                <option>United States</option>
+                                                <option>Canada</option>
+                                                <option>France</option>
+                                                <option>Germany</option>
+                                            </select>
+                                        </div>
+                                    </div>
 
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="npk_user">
-              NPK:
-            </label>
-            <input
-              type="text"
-              name="npk_user"
-              value={formData.npk_user}
-              onChange={handleChange}
-              className="border rounded-md px-3 py-2 w-full"
-            />
-            <br />
-          </div>
+                                    <div class="flex-1">
+                                        <label
+                                            htmlFor="user"
+                                            class="block text-lg font-medium leading-6 text-gray-900"
+                                        >
+                                            Keterangan
+                                        </label>
+                                        <div class="mt-2">
+                                            <select
+                                                id="countries"
+                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                            >
+                                                <option>Aman</option>
+                                                <option>Tidak Aman</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
 
-          {/* Add other form fields as needed */}
+                                <div className="col-span-full flex gap-8">
+                                    <div className="flex-1">
+                                        <label
+                                            className="text-lg"
+                                            htmlhtmlFor=""
+                                        >
+                                            Tanggal dan Waktu Temuan
+                                        </label>
+                                        <DateTimePickerMui />
+                                    </div>
 
-          {/* Submit Button */}
-          <div className="mb-6 text-center">
-            <button
-              type="submit"
-              className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue"
-            >
-              Update User
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-  );
+                                    <div className="flex-1">
+                                        <label
+                                            htmlFor="about"
+                                            class="block font-medium leading-6 text-gray-900 text-lg"
+                                        >
+                                            Uraian Hasil Patroli
+                                        </label>
+                                        <div class="mt-2">
+                                            <textarea
+                                                id="about"
+                                                name="about"
+                                                rows="3"
+                                                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                            ></textarea>
+                                        </div>
+                                        <p class="mt-3 text-sm leading-6 text-gray-600">
+                                            Jelaskan mengenai hasil temuan.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="col-span-full">
+                                    <label className="text-lg" htmlhtmlFor="">
+                                        Status Laporan
+                                    </label>
+
+                                    <div class="mt-2">
+                                        <select
+                                            id="countries"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                        >
+                                            <option>Pending</option>
+                                            <option>Accepted</option>
+                                            <option>Rejected</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 flex items-center justify-end gap-x-6">
+                        <button
+                            type="button"
+                            class="text-sm font-semibold leading-6 text-gray-900"
+                        >
+                            Batalkan
+                        </button>
+                        <button
+                            type="submit"
+                            class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                        >
+                            Perbarui
+                        </button>
+                    </div>
+                </form>
+            </>
+        </AuthenticatedLayout>
+    );
 }
