@@ -14,11 +14,16 @@ return new class extends Migration {
             $table->id();
             $table->unsignedBigInteger('users_id');
             $table->string('jenis_kejadian');
+<<<<<<< HEAD
             $table->dateTime('tanggal_waktu_kejadian');
+=======
+            $table->dateTime('tanggal_kejadian');
+>>>>>>> fixing-bug
             $table->string('tempat_kejadian');
             $table->string('kerugian_akibat_kejadian')->nullable();
             $table->string('penanganan');
             $table->string('keterangan_lain');
+            $table->string('penanganan');
             $table->timestamps();
             $table->softDeletes();
             $table->string('created_by')->nullable();

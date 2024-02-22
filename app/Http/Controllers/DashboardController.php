@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\FormulirPatroliLaut;
 use App\Models\User;
+use App\Models\MShift;
+use App\Models\PhotoPatroliLaut;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use App\Models\Role;
@@ -18,8 +20,18 @@ class DashboardController extends Controller
     }
 
     public function dataPatroli()
-    {
-        $formulir_patroli_laut = FormulirPatroliLaut::all();
+    { 
+        
+        $formulir_patroli_laut = FormulirPatroliLaut::join('users', 'formulir_patroli_laut.users_id', '=', 'users.id')
+            ->join('m_shift', 'formulir_patroli_laut.m_shift_id', '=', 'm_shift.id')
+            ->select('formulir_patroli_laut.*', 'users.*', 'm_shift.*', 
+            'formulir_patroli_laut.keterangan as keterangan_formulir_patroli_laut', 
+            'm_shift.keterangan as keterangan_m_shift',
+            'formulir_patroli_laut.id as id_formulir_patroli_laut',
+            'm_shift.id as id_m_shift',
+            )
+            ->get();
+        
         return Inertia::render('DataPatroli', ['formulir_patroli_laut' => $formulir_patroli_laut]);
     }
 

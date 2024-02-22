@@ -28,7 +28,8 @@ class FormulirPatroliLautController extends Controller
     {
         $formulir = FormulirPatroliLaut::with('photoPatroliLauts')->find($id);
 
-        if (!$formulir) {
+        if (!$formulir)
+        {
             return response()->json(['message' => 'Formulir not found'], 404);
         }
 
@@ -38,10 +39,12 @@ class FormulirPatroliLautController extends Controller
 
     public function edit($id)
     {
-        try {
+        try
+        {
             $formulir = FormulirPatroliLaut::findOrFail($id);
             $m_shift = MShift::all();
             $photo = PhotoPatroliLaut::find($id);
+            $users = User::all();
             $user = User::find($formulir->users_id);
 
             return Inertia::render('UserEditPage', [
@@ -49,9 +52,12 @@ class FormulirPatroliLautController extends Controller
                 'm_shift' => $m_shift,
                 'photo' => $photo,
                 'user' => $user,
+                'users' => $users,
                 'updateUrl' => route('formulirpatrolilaut.update', ['id' => $id]),
             ]);
-        } catch (\Exception $e) {
+        }
+        catch (\Exception $e)
+        {
             // Handle errors, for example, redirecting back with an error message
             return redirect()->back()->with('error', 'Terjadi kesalahan saat mengambil data pengguna');
         }
@@ -59,25 +65,11 @@ class FormulirPatroliLautController extends Controller
 
     public function update(Request $request, $id)
     {
-        $formulir = FormulirPatroliLaut::findOrFail($id);
-        $validatedData = $request->validate([
-            'users_id' => 'required|exists:users,id',
-            'tanggal_kejadian' => 'required|date',
-            'm_shift_id' => 'required|exists:m_shift,id',
-            'uraian_hasil' => 'required|string',
-            'keterangan' => 'required|string',
-        ]);
 
-        try {
-            // Mengupdate data user
-            $formulir->update($validatedData);
+        $formulir = FormulirPatroliLaut::find($id);
+        $formulir->update($request->all());
 
-            // Redirect back to the edit page with success message
-            return redirect()->route('formulirpatrolilaut.edit', $formulir)->with('success', 'Formulir berhasil diupdate');
-        } catch (\Exception $e) {
-            // Handle errors
-            return redirect()->back()->with('error', 'Terjadi kesalahan saat mengupdate Formulir');
-        }
+        return Inertia::location(route('formulirpatrolilaut.edit', ['id' => $formulir->id]));
     }
 
     public function store(Request $request)
@@ -90,7 +82,8 @@ class FormulirPatroliLautController extends Controller
             'keterangan' => 'required|string',
         ]);
 
-        try {
+        try
+        {
             $request = FormulirPatroliLaut::create([
                 'users_id' => $request->users_id,
                 'tanggal_kejadian' => $request->tanggal_kejadian,
@@ -101,7 +94,9 @@ class FormulirPatroliLautController extends Controller
 
             // Redirect atau berikan respons sukses
             return redirect()->route('dataPatroli')->with('success', 'Formulir berhasil ditambahkan');
-        } catch (\Exception $e) {
+        }
+        catch (\Exception $e)
+        {
             // Tangani kesalahan
             return redirect()->route('formulirpatrolilaut.create')->with('error', 'Terjadi kesalahan saat menambahkan formulir');
         }

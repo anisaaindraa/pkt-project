@@ -66,29 +66,23 @@ class FormulirPelaporanKejadianController extends Controller
         $request->validate([
             'users_id' => 'required|exists:users,id',
             'jenis_kejadian' => 'required|string',
-<<<<<<< HEAD
-            'tanggal_waktu_kejadian' => 'required|date',
-=======
-            'tanggal_kejadian' => 'required',
->>>>>>> fixing-bug
+            'tanggal_kejadian' => 'required|date',
+            'waktu_kejadian' => 'required|date_format:H:i',
             'tempat_kejadian' => 'required|string',
             'kerugian_akibat_kejadian' => 'required|string',
             'keterangan_lain' => 'required|string',
         ]);
 
         // Update the main model
-<<<<<<< HEAD
         $formulir->update($request->only([
             'users_id',
             'jenis_kejadian',
-            'tanggal_waktu_kejadian',
+            'tanggal_kejadian',
+            'waktu_kejadian',
             'tempat_kejadian',
             'kerugian_akibat_kejadian',
             'keterangan_lain',
         ]));
-=======
-        $formulir->update($request->all());
->>>>>>> fixing-bug
 
         // Assuming 'korban' and 'pelaku' are relationships on the 'FormulirPelaporanKejadian' model
         if ($request->has('korban')) {
@@ -99,9 +93,7 @@ class FormulirPelaporanKejadianController extends Controller
             $formulir->pelaku()->update($request->input('pelaku'));
         }
 
-        return Inertia::location(route('formulirpelaporankejadian.edit', ['id' => $formulir->id]));
-
-
+        return response()->json(['data' => $formulir->load('korban', 'pelaku')]);
     }
 
     public function store(Request $request)
@@ -109,10 +101,10 @@ class FormulirPelaporanKejadianController extends Controller
         $request->validate([
             'users_id' => 'required|exists:users,id',
             'jenis_kejadian' => 'required|string',
-            'tanggal_waktu_kejadian' => 'required|date',
+            'tanggal_kejadian' => 'required|date',
+            'waktu_keajadian' => 'required|time',
             'tempat_kejadian' => 'required|string',
             'kerugian_akibat_kejadian' => 'required|string',
-            'penanganan' => 'required|string',
             'keterangan_lain' => 'required|string',
         ]);
 

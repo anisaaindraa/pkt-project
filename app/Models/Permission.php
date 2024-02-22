@@ -9,6 +9,6 @@ class Permission extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nama_permission'];
+    protected $fillable = ['nama'];
 
 }
