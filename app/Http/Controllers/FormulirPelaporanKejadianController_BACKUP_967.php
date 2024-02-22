@@ -66,29 +66,14 @@ class FormulirPelaporanKejadianController extends Controller
         $request->validate([
             'users_id' => 'required|exists:users,id',
             'jenis_kejadian' => 'required|string',
-<<<<<<< HEAD
-            'tanggal_waktu_kejadian' => 'required|date',
-=======
             'tanggal_kejadian' => 'required',
->>>>>>> fixing-bug
             'tempat_kejadian' => 'required|string',
             'kerugian_akibat_kejadian' => 'required|string',
             'keterangan_lain' => 'required|string',
         ]);
 
         // Update the main model
-<<<<<<< HEAD
-        $formulir->update($request->only([
-            'users_id',
-            'jenis_kejadian',
-            'tanggal_waktu_kejadian',
-            'tempat_kejadian',
-            'kerugian_akibat_kejadian',
-            'keterangan_lain',
-        ]));
-=======
         $formulir->update($request->all());
->>>>>>> fixing-bug
 
         // Assuming 'korban' and 'pelaku' are relationships on the 'FormulirPelaporanKejadian' model
         if ($request->has('korban')) {

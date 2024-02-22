@@ -28,12 +28,7 @@ Route::middleware(['auth.api'])->group(function () {
     Route::get('example', function () {
         return 'Hello, login passed!';
     });
-<<<<<<< HEAD
-    Route::post('formpatrolilaut', [APIController::class, 'createFormulirPatroliLaut']);
-    Route::post('formpelaporankejadian', [APIController::class, 'createFormulirPelaporanKejadian']);
-=======
     Route::get('getuserid', [APIController::class, 'getUserId']);
->>>>>>> fixing-bug
 });
 Route::post('formpatrolilaut', [APIController::class, 'createFormulirPatroliLaut']);
 Route::post('formpelaporankejadian', [APIController::class, 'createFormulirPelaporanKejadian']);

@@ -125,11 +125,7 @@ class APIController extends Controller
         $validator = Validator::make($request->all(), [
             'users_id' => ['required', 'integer', 'exists:users,id'],
             'jenis_kejadian' => ['required', 'string'],
-<<<<<<< HEAD
-            'tanggal_waktu_kejadian' => ['required', 'date'],
-=======
             'tanggal_kejadian' => ['required'],
->>>>>>> fixing-bug
             'tempat_kejadian' => ['required', 'string'],
             'kerugian_akibat_kejadian' => ['nullable', 'string'],
             'penanganan' => ['required', 'string'],
@@ -153,18 +149,10 @@ class APIController extends Controller
         }
 
         try {
-<<<<<<< HEAD
-            // Simpan data formulir pelaporan kejadian ke dalam database
-            $formulir = FormulirPelaporanKejadian::create([
-                'users_id' => $request->users_id,
-                'jenis_kejadian' => $request->jenis_kejadian,
-                'tanggal_waktu_kejadian' => $request->tanggal_waktu_kejadian,
-=======
             $formulir = FormulirPelaporanKejadian::create([
                 'users_id' => $request->users_id,
                 'jenis_kejadian' => $request->jenis_kejadian,
                 'tanggal_kejadian' => $request->tanggal_kejadian,
->>>>>>> fixing-bug
                 'tempat_kejadian' => $request->tempat_kejadian,
                 'kerugian_akibat_kejadian' => $request->kerugian_akibat_kejadian,
                 'penanganan' => $request->penanganan,

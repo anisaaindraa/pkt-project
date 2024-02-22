@@ -19,6 +19,7 @@ export default function PatroliEditPage(props) {
           });
         }
     }, [props.formulir_patroli_laut]);
+    console.log(formData);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -56,7 +57,7 @@ export default function PatroliEditPage(props) {
               Tanggal Kejadian:
             </label>
             <input
-              type="text"
+              type="date"
               name="tanggal_kejadian"
               value={formData.tanggal_kejadian}
               onChange={handleChange}
@@ -83,7 +84,7 @@ export default function PatroliEditPage(props) {
             </select>
           </div>
 
-          <div className="mb-4">
+          <div className="mb-4 pt-4">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="uraian_hasil">
               Uraian Hasil Patroli:
             </label>

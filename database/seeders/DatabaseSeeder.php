@@ -109,16 +109,11 @@ class DatabaseSeeder extends Seeder
         FormulirPelaporanKejadian::create([
             'users_id' => '1',
             'jenis_kejadian' => 'Kehilangan',
-<<<<<<< HEAD
-            'tanggal_waktu_kejadian' => '2023-12-01 11:03:00',
-=======
             'tanggal_kejadian' => '2023-12-01 11:03:00',
->>>>>>> fixing-bug
             'tempat_kejadian' => 'kantor dept.keamanan',
             'kerugian_akibat_kejadian' => 'kehilangan HP',
             'penanganan' => 'Polisi',
             'keterangan_lain' => 'HP berwarna hitam, dengan case HP berwara pink',
-            'penanganan' => 'Lapor ke pihak keamanan',
         ]);
 
         Korban::create([

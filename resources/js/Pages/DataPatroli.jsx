@@ -56,10 +56,6 @@ const DataTablePatroli = ({ formulir_patroli_laut }) => {
                                 Uraian Hasil Patroli
                             </th>
 
-                            <th className="py-2 px-4 border-b">
-                                Status Laporan
-                            </th>
-
                             <th className="py-2 px-4 border-b">Keterangan</th>
 
                             <th className="py-2 px-4 border-b">Actions</th>
@@ -101,11 +97,6 @@ const DataTablePatroli = ({ formulir_patroli_laut }) => {
                                                     )
                                                 )}
                                         </td> */}
-
-                                        <td className="py-2 px-4">
-                                            {formulir_patroli_laut.status}
-                                        </td>
-
                                         <td className="py-2 px-4">
                                             {
                                                 formulir_patroli_laut.keterangan_formulir_patroli_laut

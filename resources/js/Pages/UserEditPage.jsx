@@ -1,289 +1,178 @@
-import React, { useEffect, useState } from "react";
-import { Inertia } from "@inertiajs/inertia";
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-
-import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
-import dayjs from "dayjs";
+import React, { useEffect, useState } from 'react';
+import { Inertia } from '@inertiajs/inertia';
 
 export default function UserEditPage(props) {
-    const { users, user, m_shift, formulir_patroli_laut } = props;
+  const [formData, setFormData] = useState({
+    role_id: '',
+    username: '',
+    email: '',
+    nama_user: '',
+    alamat_user: '',
+    pekerjaan_user: '',
+    npk_user: '',
+  });
 
-    const [formData, setFormData] = useState({
-        user_id: "",
-        m_shift_id: 1,
-        keterangan: "",
-        tanggal_kejadian: "",
-        uraian_hasil: "",
-        status: "",
+  useEffect(() => {
+    setFormData({
+      role_id: props.user.role_id,
+      username: props.user.username,
+      email: props.user.email,
+      nama_user: props.user.nama_user,
+      alamat_user: props.user.alamat_user,
+      pekerjaan_user: props.user.pekerjaan_user,
+      npk_user: props.user.npk_user,
     });
+  }, [props.user]);
 
-    useEffect(() => {
-        setFormData({
-            user_id: user.id,
-            m_shift_id: formulir_patroli_laut.m_shift_id,
-            keterangan: formulir_patroli_laut.keterangan,
-            tanggal_kejadian: formulir_patroli_laut.tanggal_kejadian,
-            uraian_hasil: formulir_patroli_laut.uraian_hasil,
-            status: formulir_patroli_laut.status,
-        });
-    }, [props.user]);
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData((prevData) => ({
-            ...prevData,
-            [name]: value,
-        }));
-    };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    try {
+      await Inertia.put(props.updateUrl, formData, {
+        onSuccess: () => {
+          console.log('success');
+          props.onUpdateUser(data);
+          Inertia.visit(route('users.edit'));
+        },
+        onError: (errors) => {
+          console.log('error', errors);
+        },
+      });
+    } catch (error) {
+      console.error('Error updating user:', error);
+    }
+  };
 
-        try {
-            await Inertia.put(props.updateUrl, formData, {
-                onSuccess: () => {
-                    console.log("success");
-                    props.onUpdateUser(data);
-                    Inertia.visit(route("formulirpatrolilaut.edit"));
-                },
-                onError: (errors) => {
-                    console.log("error", errors);
-                },
-            });
-        } catch (error) {
-            console.error("Error updating user:", error);
-        }
-    };
+  return (
+    <div className="flex items-center justify-center min-h-screen">
+      <div className="w-full max-w-md">
+        <h1 className="text-3xl font-semibold mb-4 text-center">Edit User</h1>
+        <form onSubmit={handleSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+  
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="role_id">
+              Role:
+            </label>
+            <select
+              name="role_id"
+              value={formData.role_id}
+              onChange={handleChange}
+              className="border rounded-md px-3 py-2 w-full"
+            >
+              <option value="">Select Role</option>
+              {props.roles.map((role) => (
+                <option key={role.id} value={role.id}>
+                  {role.nama_role}
+                </option>
+              ))}
+            </select>
+          </div>
 
-    return (
-        <AuthenticatedLayout>
-            <>
-                <h3 className="text-2xl text-blue-950 font-bold mb-6">
-                    Formulir Edit Patroli Laut
-                </h3>
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
+              Username:
+            </label>
+            <input
+              type="text"
+              name="username"
+              value={formData.username}
+              onChange={handleChange}
+              className="border rounded-md px-3 py-2 w-full"
+            />
+            <br />
+          </div>
 
-                <form onSubmit={handleSubmit}>
-                    <div className="space-y-12">
-                        <div className="border-b border-gray-900/10 pb-12">
-                            <h2 className="text-base font-semibold leading-7 text-gray-900">
-                                Data Formulir
-                            </h2>
-                            <p className="mt-1 text-sm leading-6 text-gray-600">
-                                Merubah data formulir patroli laut.
-                            </p>
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
+              Email:
+            </label>
+            <input
+              type="text"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              className="border rounded-md px-3 py-2 w-full"
+            />
+            <br />
+          </div>
 
-                            <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                                <div className="flex col-span-full gap-4">
-                                    <div className="flex-1">
-                                        <label
-                                            htmlFor="user"
-                                            className="block text-lg font-medium leading-6 text-gray-900"
-                                        >
-                                            Petugas
-                                        </label>
-                                        <div className="mt-2">
-                                            <select
-                                                id="user"
-                                                name="user_id"
-                                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                onChange={(e) =>
-                                                    handleChange(e)
-                                                }
-                                            >
-                                                {users.map((item) => (
-                                                    <option
-                                                        key={item.id}
-                                                        value={formData.user_id}
-                                                        defaultValue={user.id}
-                                                    >
-                                                        {item.username} -{" "}
-                                                        {item.nama_user}
-                                                    </option>
-                                                ))}
-                                            </select>
-                                        </div>
-                                    </div>
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
+              Password:
+            </label>
+            <input
+              type="text"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              className="border rounded-md px-3 py-2 w-full"
+            />
+            <br />
+          </div>
 
-                                    <div className="flex-1">
-                                        <label
-                                            htmlFor="user"
-                                            className="block text-lg font-medium leading-6 text-gray-900"
-                                        >
-                                            Shift
-                                        </label>
-                                        <div className="mt-2">
-                                            <select
-                                                id="m_shift"
-                                                name="m_shift_id"
-                                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                defaultValue={
-                                                    formulir_patroli_laut.m_shift_id
-                                                }
-                                                onChange={(e) =>
-                                                    setFormData({
-                                                        ...formData,
-                                                        m_shift_id: parseInt(
-                                                            e.target.value
-                                                        ),
-                                                    })
-                                                }
-                                            >
-                                                {m_shift.map((shift) => (
-                                                    <option
-                                                        key={shift.id}
-                                                        value={parseInt(
-                                                            shift.id
-                                                        )}
-                                                        selected={
-                                                            formData.m_shift_id ===
-                                                            shift.id
-                                                        }
-                                                    >
-                                                        {shift.id} -{" "}
-                                                        {shift.nama_shift}
-                                                    </option>
-                                                ))}
-                                            </select>
-                                        </div>
-                                    </div>
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="nama_user">
+              Nama User:
+            </label>
+            <input
+              type="text"
+              name="nama_user"
+              value={formData.nama_user}
+              onChange={handleChange}
+              className="border rounded-md px-3 py-2 w-full"
+            />
+            <br />
+          </div>
 
-                                    <div className="flex-1">
-                                        <label
-                                            htmlFor="user"
-                                            className="block text-lg font-medium leading-6 text-gray-900"
-                                        >
-                                            Keterangan
-                                        </label>
-                                        <div className="mt-2">
-                                            <input
-                                                type="text"
-                                                name="keterangan"
-                                                id="keterangan"
-                                                disabled={false}
-                                                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                                onChange={(e) =>
-                                                    setFormData({
-                                                        ...formData,
-                                                        keterangan:
-                                                            e.target.value,
-                                                    })
-                                                }
-                                                value={formData.keterangan}
-                                            />
-                                        </div>
-                                    </div>
-                                </div>
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="pekerjaan_user">
+              Pekerjaan:
+            </label>
+            <input
+              type="text"
+              name="pekerjaan_user"
+              value={formData.pekerjaan_user}
+              onChange={handleChange}
+              className="border rounded-md px-3 py-2 w-full"
+            />
+            <br />
+          </div>
 
-                                <div className="col-span-full flex gap-8">
-                                    <div className="flex-1">
-                                        <label className="text-lg" htmlFor="">
-                                            Tanggal dan Waktu Temuan
-                                        </label>
-                                        <DateTimePicker
-                                            name="tanggal_kejadian"
-                                            value={dayjs(
-                                                formData.tanggal_kejadian
-                                            )}
-                                            onChange={(e) => {
-                                                console.log(e);
-                                                setFormData({
-                                                    ...formData,
-                                                    tanggal_kejadian:
-                                                        e.toISOString(),
-                                                });
-                                            }}
-                                        />
-                                    </div>
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="npk_user">
+              NPK:
+            </label>
+            <input
+              type="text"
+              name="npk_user"
+              value={formData.npk_user}
+              onChange={handleChange}
+              className="border rounded-md px-3 py-2 w-full"
+            />
+            <br />
+          </div>
 
-                                    <div className="flex-1">
-                                        <label
-                                            htmlFor="about"
-                                            className="block font-medium leading-6 text-gray-900 text-lg"
-                                        >
-                                            Uraian Hasil Patroli
-                                        </label>
-                                        <div className="mt-2">
-                                            <textarea
-                                                id="about"
-                                                name="uraian_hasil"
-                                                rows="3"
-                                                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                                onChange={(e) =>
-                                                    handleChange(e)
-                                                }
-                                            >
-                                                {
-                                                    formulir_patroli_laut.uraian_hasil
-                                                }
-                                            </textarea>
-                                        </div>
-                                        <p className="mt-3 text-sm leading-6 text-gray-600">
-                                            Jelaskan mengenai hasil temuan.
-                                        </p>
-                                    </div>
-                                </div>
+          {/* Add other form fields as needed */}
 
-                                <div className="col-span-full">
-                                    <label className="text-lg" htmlhtmlFor="">
-                                        Status Laporan
-                                    </label>
-
-                                    <div className="mt-2">
-                                        <select
-                                            id="countries"
-                                            name="status"
-                                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                            onChange={(e) => handleChange(e)}
-                                        >
-                                            <option
-                                                value="pending"
-                                                selected={
-                                                    formData.status ===
-                                                    "pending"
-                                                }
-                                            >
-                                                Pending
-                                            </option>
-                                            <option
-                                                value="accepted"
-                                                selected={
-                                                    formData.status ===
-                                                    "accepted"
-                                                }
-                                            >
-                                                Accepted
-                                            </option>
-                                            <option
-                                                value="rejected"
-                                                selected={
-                                                    formData.status ===
-                                                    "rejected"
-                                                }
-                                            >
-                                                Rejected
-                                            </option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="mt-6 flex items-center justify-end gap-x-6">
-                        <button
-                            type="button"
-                            className="text-sm font-semibold leading-6 text-gray-900"
-                        >
-                            Batalkan
-                        </button>
-                        <button
-                            type="submit"
-                            className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                        >
-                            Perbarui
-                        </button>
-                    </div>
-                </form>
-            </>
-        </AuthenticatedLayout>
-    );
+          {/* Submit Button */}
+          <div className="mb-6 text-center">
+            <button
+              type="submit"
+              className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue"
+            >
+              Update User
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
 }
