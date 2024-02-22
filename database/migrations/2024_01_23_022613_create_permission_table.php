@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('permissions', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_permission');
+            $table->string('nama');
 
             $table->timestamps();
             $table->softDeletes();
