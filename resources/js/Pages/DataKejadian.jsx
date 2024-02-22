@@ -1,6 +1,6 @@
 import React from "react";
-import { InertiaLink } from "@inertiajs/inertia-react";
 import { Inertia } from "@inertiajs/inertia";
+import { Link } from "@inertiajs/react";
 
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 
@@ -116,7 +116,7 @@ const DataTableKejadian = ({ formulir_pelaporan_kejadian }) => {
                                             : "No Pelaku"}
                                     </td>
                                     <td className="py-2 px-4 flex items-center justify-center space-x-2">
-                                        <InertiaLink
+                                        <Link
                                             href={route(
                                                 "formulirpelaporankejadian.edit",
                                                 { id: formulir.id }
@@ -124,7 +124,7 @@ const DataTableKejadian = ({ formulir_pelaporan_kejadian }) => {
                                             className="bg-blue-500 text-white px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-blue"
                                         >
                                             Edit
-                                        </InertiaLink>
+                                        </Link>
                                         <button
                                             onClick={() =>
                                                 handleDelete(formulir.id)

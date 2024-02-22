@@ -3,7 +3,6 @@ import { Inertia } from "@inertiajs/inertia";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
-import { parse } from "postcss";
 import dayjs from "dayjs";
 
 export default function UserEditPage(props) {
@@ -17,8 +16,6 @@ export default function UserEditPage(props) {
         uraian_hasil: "",
         status: "",
     });
-
-    console.log("formulir_patroli_laut", formData);
 
     useEffect(() => {
         setFormData({
@@ -184,16 +181,15 @@ export default function UserEditPage(props) {
                                         </label>
                                         <DateTimePicker
                                             name="tanggal_kejadian"
-                                            defaultValue={
-                                                dayjs(
-                                                    formulir_patroli_laut.tanggal_kejadian
-                                                )
-                                            }
+                                            value={dayjs(
+                                                formData.tanggal_kejadian
+                                            )}
                                             onChange={(e) => {
                                                 console.log(e);
                                                 setFormData({
                                                     ...formData,
-                                                    tanggal_kejadian: e.toISOString(),
+                                                    tanggal_kejadian:
+                                                        e.toISOString(),
                                                 });
                                             }}
                                         />

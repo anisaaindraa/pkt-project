@@ -27,7 +27,8 @@ class FormulirPelaporanKejadianController extends Controller
     {
         $formulir = FormulirPelaporanKejadian::find($id);
 
-        if (!$formulir) {
+        if (!$formulir)
+        {
             return response()->json(['message' => 'Formulir not found'], 404);
         }
 
@@ -36,7 +37,8 @@ class FormulirPelaporanKejadianController extends Controller
 
     public function edit($id)
     {
-        try {
+        try
+        {
             $formulir = FormulirPelaporanKejadian::find($id);
             $korban = Korban::where('formulir_pelaporan_kejadian_id', $id)->get();
             $pelaku = Pelaku::where('formulir_pelaporan_kejadian_id', $id)->get();
@@ -49,7 +51,9 @@ class FormulirPelaporanKejadianController extends Controller
                 'user' => $user,
                 'updateUrl' => route('formulirpelaporankejadian.update', ['id' => $id]),
             ]);
-        } catch (\Exception $e) {
+        }
+        catch (\Exception $e)
+        {
             // Handle errors, for example, redirecting back with an error message
             return redirect()->back()->with('error', 'Terjadi kesalahan saat mengambil data formulir');
         }
@@ -59,41 +63,37 @@ class FormulirPelaporanKejadianController extends Controller
     {
         $formulir = FormulirPelaporanKejadian::with(['korban', 'pelaku'])->find($id);
 
-        if (!$formulir) {
+        if (!$formulir)
+        {
             return response()->json(['message' => 'Formulir not found'], 404);
         }
 
         $request->validate([
             'users_id' => 'required|exists:users,id',
             'jenis_kejadian' => 'required|string',
-            'tanggal_kejadian' => 'required|date',
-            'waktu_kejadian' => 'required|date_format:H:i',
+            'tanggal_kejadian' => 'required',
             'tempat_kejadian' => 'required|string',
             'kerugian_akibat_kejadian' => 'required|string',
             'keterangan_lain' => 'required|string',
         ]);
 
         // Update the main model
-        $formulir->update($request->only([
-            'users_id',
-            'jenis_kejadian',
-            'tanggal_kejadian',
-            'waktu_kejadian',
-            'tempat_kejadian',
-            'kerugian_akibat_kejadian',
-            'keterangan_lain',
-        ]));
+        $formulir->update($request->all());
 
         // Assuming 'korban' and 'pelaku' are relationships on the 'FormulirPelaporanKejadian' model
-        if ($request->has('korban')) {
+        if ($request->has('korban'))
+        {
             $formulir->korban()->update($request->input('korban'));
         }
 
-        if ($request->has('pelaku')) {
+        if ($request->has('pelaku'))
+        {
             $formulir->pelaku()->update($request->input('pelaku'));
         }
 
-        return response()->json(['data' => $formulir->load('korban', 'pelaku')]);
+        return Inertia::location(route('formulirpelaporankejadian.edit', ['id' => $formulir->id]));
+
+
     }
 
     public function store(Request $request)
