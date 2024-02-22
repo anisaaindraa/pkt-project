@@ -111,19 +111,20 @@ class APIController extends Controller
             'tanggal_kejadian' => ['required'],
             'tempat_kejadian' => ['required', 'string'],
             'kerugian_akibat_kejadian' => ['nullable', 'string'],
+            'penanganan' => ['required', 'string'],
             'keterangan_lain' => ['required', 'string'],
-            'korban' => ['required', 'array'],
-            'korban.*.nama_korban' => ['required', 'string'],
-            'korban.*.umur_korban' => ['required', 'integer'],
-            'korban.*.pekerjaan_korban' => ['required', 'string'],
-            'korban.*.alamat_korban' => ['required', 'string'],
-            'korban.*.no_tlp_korban' => ['required', 'integer'],
-            'pelaku' => ['required', 'array'],
-            'pelaku.*.nama_pelaku' => ['required', 'string'],
-            'pelaku.*.umur_pelaku' => ['required', 'integer'],
-            'pelaku.*.pekerjaan_pelaku' => ['required', 'string'],
-            'pelaku.*.alamat_pelaku' => ['required', 'string'],
-            'pelaku.*.no_tlp_pelaku' => ['required', 'integer'],
+            // 'korban' => ['required', 'array'],
+            // 'korban.*.nama_korban' => ['required', 'string'],
+            // 'korban.*.umur_korban' => ['required', 'integer'],
+            // 'korban.*.pekerjaan_korban' => ['required', 'string'],
+            // 'korban.*.alamat_korban' => ['required', 'string'],
+            // 'korban.*.no_tlp_korban' => ['required', 'integer'],
+            // // 'pelaku' => ['required', 'array'],
+            // 'pelaku.*.nama_pelaku' => ['required', 'string'],
+            // 'pelaku.*.umur_pelaku' => ['required', 'integer'],
+            // 'pelaku.*.pekerjaan_pelaku' => ['required', 'string'],
+            // 'pelaku.*.alamat_pelaku' => ['required', 'string'],
+            // 'pelaku.*.no_tlp_pelaku' => ['required', 'integer'],
         ]);
 
         if ($validator->fails()) {
@@ -131,24 +132,25 @@ class APIController extends Controller
         }
 
         try {
-            // Format the 'waktu_kejadian' using Carbon
-            $formattedWaktuKejadian = Carbon::createFromFormat('H:i', $request->waktu_kejadian)->format('Y-m-d H:i:s');
-
-            // Simpan data formulir pelaporan kejadian ke dalam database
             $formulir = FormulirPelaporanKejadian::create([
                 'users_id' => $request->users_id,
                 'jenis_kejadian' => $request->jenis_kejadian,
-                'tanggal_waktu_kejadian' => $request->tanggal_kejadian,
+                'tanggal_kejadian' => $request->tanggal_kejadian,
                 'tempat_kejadian' => $request->tempat_kejadian,
                 'kerugian_akibat_kejadian' => $request->kerugian_akibat_kejadian,
+                'penanganan' => $request->penanganan,
                 'keterangan_lain' => $request->keterangan_lain,
             ]);
+            if (gettype($request->korban) == 'string') {
+                $korbanjson = json_decode($request->korban);
+                $pelakujson = json_decode($request->pelaku);
 
-            // Simpan korban
-            $formulir->korban()->createMany($request->korban);
-
-            // Simpan pelaku
-            $formulir->pelaku()->createMany($request->pelaku);
+                $formulir->korban()->createMany($korbanjson);
+                $formulir->pelaku()->createMany($pelakujson);
+            } else {
+                $formulir->korban()->createMany($request->korban);
+                $formulir->pelaku()->createMany($request->pelaku);
+            }
 
             return response()->json([
                 'success' => true,

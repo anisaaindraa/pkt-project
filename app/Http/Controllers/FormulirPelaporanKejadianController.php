@@ -27,8 +27,7 @@ class FormulirPelaporanKejadianController extends Controller
     {
         $formulir = FormulirPelaporanKejadian::find($id);
 
-        if (!$formulir)
-        {
+        if (!$formulir) {
             return response()->json(['message' => 'Formulir not found'], 404);
         }
 
@@ -37,8 +36,7 @@ class FormulirPelaporanKejadianController extends Controller
 
     public function edit($id)
     {
-        try
-        {
+        try {
             $formulir = FormulirPelaporanKejadian::find($id);
             $korban = Korban::where('formulir_pelaporan_kejadian_id', $id)->get();
             $pelaku = Pelaku::where('formulir_pelaporan_kejadian_id', $id)->get();
@@ -51,9 +49,7 @@ class FormulirPelaporanKejadianController extends Controller
                 'user' => $user,
                 'updateUrl' => route('formulirpelaporankejadian.update', ['id' => $id]),
             ]);
-        }
-        catch (\Exception $e)
-        {
+        } catch (\Exception $e) {
             // Handle errors, for example, redirecting back with an error message
             return redirect()->back()->with('error', 'Terjadi kesalahan saat mengambil data formulir');
         }
@@ -63,8 +59,7 @@ class FormulirPelaporanKejadianController extends Controller
     {
         $formulir = FormulirPelaporanKejadian::with(['korban', 'pelaku'])->find($id);
 
-        if (!$formulir)
-        {
+        if (!$formulir) {
             return response()->json(['message' => 'Formulir not found'], 404);
         }
 
@@ -81,13 +76,11 @@ class FormulirPelaporanKejadianController extends Controller
         $formulir->update($request->all());
 
         // Assuming 'korban' and 'pelaku' are relationships on the 'FormulirPelaporanKejadian' model
-        if ($request->has('korban'))
-        {
+        if ($request->has('korban')) {
             $formulir->korban()->update($request->input('korban'));
         }
 
-        if ($request->has('pelaku'))
-        {
+        if ($request->has('pelaku')) {
             $formulir->pelaku()->update($request->input('pelaku'));
         }
 
@@ -105,6 +98,7 @@ class FormulirPelaporanKejadianController extends Controller
             'waktu_keajadian' => 'required|time',
             'tempat_kejadian' => 'required|string',
             'kerugian_akibat_kejadian' => 'required|string',
+            'penanganan' => 'required|string',
             'keterangan_lain' => 'required|string',
         ]);
 
