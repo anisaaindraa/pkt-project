@@ -15,10 +15,10 @@ return new class extends Migration {
             $table->unsignedBigInteger('users_id');
             $table->string('jenis_kejadian');
             $table->dateTime('tanggal_kejadian');
-            $table->timestamp('waktu_kejadian');
             $table->string('tempat_kejadian');
             $table->string('kerugian_akibat_kejadian')->nullable();
             $table->string('keterangan_lain');
+            $table->string('penanganan');
             $table->timestamps();
             $table->softDeletes();
             $table->string('created_by')->nullable();

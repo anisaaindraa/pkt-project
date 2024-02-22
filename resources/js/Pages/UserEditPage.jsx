@@ -2,19 +2,23 @@ import React, { useEffect, useState } from "react";
 import { Inertia } from "@inertiajs/inertia";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 
-import DateTimePickerMui from "@/Components/DateTimePickerMui";
+import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
+import { parse } from "postcss";
+import dayjs from "dayjs";
 
 export default function UserEditPage(props) {
     const { users, user, m_shift, formulir_patroli_laut } = props;
 
     const [formData, setFormData] = useState({
         user_id: "",
-        m_shift_id: "",
+        m_shift_id: 1,
         keterangan: "",
         tanggal_kejadian: "",
         uraian_hasil: "",
         status: "",
     });
+
+    console.log("formulir_patroli_laut", formData);
 
     useEffect(() => {
         setFormData({
@@ -43,7 +47,7 @@ export default function UserEditPage(props) {
                 onSuccess: () => {
                     console.log("success");
                     props.onUpdateUser(data);
-                    Inertia.visit(route("users.edit"));
+                    Inertia.visit(route("formulirpatrolilaut.edit"));
                 },
                 onError: (errors) => {
                     console.log("error", errors);
@@ -85,11 +89,14 @@ export default function UserEditPage(props) {
                                                 id="user"
                                                 name="user_id"
                                                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                onChange={(e) =>
+                                                    handleChange(e)
+                                                }
                                             >
                                                 {users.map((item) => (
                                                     <option
                                                         key={item.id}
-                                                        value={form.user_id}
+                                                        value={formData.user_id}
                                                         defaultValue={user.id}
                                                     >
                                                         {item.username} -{" "}
@@ -112,15 +119,27 @@ export default function UserEditPage(props) {
                                                 id="m_shift"
                                                 name="m_shift_id"
                                                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                defaultValue={
+                                                    formulir_patroli_laut.m_shift_id
+                                                }
+                                                onChange={(e) =>
+                                                    setFormData({
+                                                        ...formData,
+                                                        m_shift_id: parseInt(
+                                                            e.target.value
+                                                        ),
+                                                    })
+                                                }
                                             >
                                                 {m_shift.map((shift) => (
                                                     <option
                                                         key={shift.id}
-                                                        value={
-                                                            formulir_patroli_laut.m_shift_id
-                                                        }
-                                                        defaultValue={
-                                                            formulir_patroli_laut.m_shift_id
+                                                        value={parseInt(
+                                                            shift.id
+                                                        )}
+                                                        selected={
+                                                            formData.m_shift_id ===
+                                                            shift.id
                                                         }
                                                     >
                                                         {shift.id} -{" "}
@@ -139,14 +158,21 @@ export default function UserEditPage(props) {
                                             Keterangan
                                         </label>
                                         <div className="mt-2">
-                                            <select
-                                                id="keterangan"
+                                            <input
+                                                type="text"
                                                 name="keterangan"
-                                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                            >
-                                                <option>Aman</option>
-                                                <option>Tidak Aman</option>
-                                            </select>
+                                                id="keterangan"
+                                                disabled={false}
+                                                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                                onChange={(e) =>
+                                                    setFormData({
+                                                        ...formData,
+                                                        keterangan:
+                                                            e.target.value,
+                                                    })
+                                                }
+                                                value={formData.keterangan}
+                                            />
                                         </div>
                                     </div>
                                 </div>
@@ -156,7 +182,21 @@ export default function UserEditPage(props) {
                                         <label className="text-lg" htmlFor="">
                                             Tanggal dan Waktu Temuan
                                         </label>
-                                        <DateTimePickerMui />
+                                        <DateTimePicker
+                                            name="tanggal_kejadian"
+                                            defaultValue={
+                                                dayjs(
+                                                    formulir_patroli_laut.tanggal_kejadian
+                                                )
+                                            }
+                                            onChange={(e) => {
+                                                console.log(e);
+                                                setFormData({
+                                                    ...formData,
+                                                    tanggal_kejadian: e.toISOString(),
+                                                });
+                                            }}
+                                        />
                                     </div>
 
                                     <div className="flex-1">
@@ -172,6 +212,9 @@ export default function UserEditPage(props) {
                                                 name="uraian_hasil"
                                                 rows="3"
                                                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                                onChange={(e) =>
+                                                    handleChange(e)
+                                                }
                                             >
                                                 {
                                                     formulir_patroli_laut.uraian_hasil
@@ -194,14 +237,33 @@ export default function UserEditPage(props) {
                                             id="countries"
                                             name="status"
                                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                            onChange={(e) => handleChange(e)}
                                         >
-                                            <option value="pending">
+                                            <option
+                                                value="pending"
+                                                selected={
+                                                    formData.status ===
+                                                    "pending"
+                                                }
+                                            >
                                                 Pending
                                             </option>
-                                            <option value="accepted">
+                                            <option
+                                                value="accepted"
+                                                selected={
+                                                    formData.status ===
+                                                    "accepted"
+                                                }
+                                            >
                                                 Accepted
                                             </option>
-                                            <option value="rejected">
+                                            <option
+                                                value="rejected"
+                                                selected={
+                                                    formData.status ===
+                                                    "rejected"
+                                                }
+                                            >
                                                 Rejected
                                             </option>
                                         </select>

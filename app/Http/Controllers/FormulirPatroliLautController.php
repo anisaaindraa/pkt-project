@@ -28,7 +28,8 @@ class FormulirPatroliLautController extends Controller
     {
         $formulir = FormulirPatroliLaut::with('photoPatroliLauts')->find($id);
 
-        if (!$formulir) {
+        if (!$formulir)
+        {
             return response()->json(['message' => 'Formulir not found'], 404);
         }
 
@@ -38,7 +39,8 @@ class FormulirPatroliLautController extends Controller
 
     public function edit($id)
     {
-        try {
+        try
+        {
             $formulir = FormulirPatroliLaut::findOrFail($id);
             $m_shift = MShift::all();
             $photo = PhotoPatroliLaut::find($id);
@@ -53,7 +55,9 @@ class FormulirPatroliLautController extends Controller
                 'users' => $users,
                 'updateUrl' => route('formulirpatrolilaut.update', ['id' => $id]),
             ]);
-        } catch (\Exception $e) {
+        }
+        catch (\Exception $e)
+        {
             // Handle errors, for example, redirecting back with an error message
             return redirect()->back()->with('error', 'Terjadi kesalahan saat mengambil data pengguna');
         }
@@ -61,21 +65,11 @@ class FormulirPatroliLautController extends Controller
 
     public function update(Request $request, $id)
     {
-    
-        $formulir = FormulirPatroliLaut::find($id);
-       
-            
-        dd($request);
-        
-        try {
-            $formulir->update($validatedData);
 
-            
-            return redirect()->route('formulirpatrolilaut.edit', $formulir)->with('success', 'Formulir berhasil diupdate');
-        } catch (\Exception $e) {
-            // Handle errors
-            return redirect()->back()->with('error', 'Terjadi kesalahan saat mengupdate Formulir');
-        }
+        $formulir = FormulirPatroliLaut::find($id);
+        $formulir->update($request->all());
+
+        return Inertia::location(route('formulirpatrolilaut.edit', ['id' => $formulir->id]));
     }
 
     public function store(Request $request)
@@ -88,7 +82,8 @@ class FormulirPatroliLautController extends Controller
             'keterangan' => 'required|string',
         ]);
 
-        try {
+        try
+        {
             $request = FormulirPatroliLaut::create([
                 'users_id' => $request->users_id,
                 'tanggal_kejadian' => $request->tanggal_kejadian,
@@ -99,7 +94,9 @@ class FormulirPatroliLautController extends Controller
 
             // Redirect atau berikan respons sukses
             return redirect()->route('dataPatroli')->with('success', 'Formulir berhasil ditambahkan');
-        } catch (\Exception $e) {
+        }
+        catch (\Exception $e)
+        {
             // Tangani kesalahan
             return redirect()->route('formulirpatrolilaut.create')->with('error', 'Terjadi kesalahan saat menambahkan formulir');
         }
