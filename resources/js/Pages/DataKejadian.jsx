@@ -34,10 +34,10 @@ const DataTableKejadian = ({ formulir_pelaporan_kejadian }) => {
           <tr>
             <th className="py-2 px-4 border-b">ID</th>
             <th className="py-2 px-4 border-b">Jenis Kejadian</th>
-            <th className="py-2 px-4 border-b">Tanggal Kejadian</th>
-            <th className="py-2 px-4 border-b">Waktu Kejadian</th>
+            <th className="py-2 px-4 border-b">Tanggal dan Waktu Kejadian</th>
             <th className="py-2 px-4 border-b">Tempat Kejadian</th>
             <th className="py-2 px-4 border-b">Kerugian Akibat Kejadian</th>
+            <th className="py-2 px-4 border-b">Penanganan</th>
             <th className="py-2 px-4 border-b">Keterangan Lain</th>
             <th className="py-2 px-4 border-b">Korban</th>
             <th className="py-2 px-4 border-b">Pelaku</th>
@@ -50,10 +50,10 @@ const DataTableKejadian = ({ formulir_pelaporan_kejadian }) => {
               <tr key={formulir.id} className="border-b">
                 <td className="py-2 px-4 text-center">{formulir.id}</td>
                 <td className="py-2 px-4 text-center">{formulir.jenis_kejadian}</td>
-                <td className="py-2 px-4 text-center">{formulir.tanggal_kejadian}</td>
-                <td className="py-2 px-4 text-center">{formulir.waktu_kejadian}</td>
+                <td className="py-2 px-4 text-center">{formulir.tanggal_waktu_kejadian}</td>
                 <td className="py-2 px-4 text-center">{formulir.tempat_kejadian}</td>
                 <td className="py-2 px-4 text-center">{formulir.kerugian_akibat_kejadian}</td>
+                <td className="py-2 px-4 text-center">{formulir.penanganan}</td>
                 <td className="py-2 px-4 text-center">{formulir.keterangan_lain}</td>
                 <td className="py-2 px-4 text-center">
                   {formulir.korban ? formulir.korban.map((k) => k.nama_korban).join(', ') : 'No Korban'}

@@ -19,6 +19,11 @@ class FormulirPatroliLaut extends Model
         return $this->hasMany(PhotoPatroliLaut::class, 'formulir_patroli_laut_id');
     }
 
+    public function photo_patroli_laut()
+    {
+        return $this->hasMany(PhotoPatroliLaut::class); // Adjust the class based on your model structure
+    }
+
     public function posts(): HasMany
     {
         return $this->hasMany(Post::class);

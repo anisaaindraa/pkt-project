@@ -66,8 +66,7 @@ class FormulirPelaporanKejadianController extends Controller
         $request->validate([
             'users_id' => 'required|exists:users,id',
             'jenis_kejadian' => 'required|string',
-            'tanggal_kejadian' => 'required|date',
-            'waktu_kejadian' => 'required|date_format:H:i',
+            'tanggal_waktu_kejadian' => 'required|date',
             'tempat_kejadian' => 'required|string',
             'kerugian_akibat_kejadian' => 'required|string',
             'keterangan_lain' => 'required|string',
@@ -77,8 +76,7 @@ class FormulirPelaporanKejadianController extends Controller
         $formulir->update($request->only([
             'users_id',
             'jenis_kejadian',
-            'tanggal_kejadian',
-            'waktu_kejadian',
+            'tanggal_waktu_kejadian',
             'tempat_kejadian',
             'kerugian_akibat_kejadian',
             'keterangan_lain',
@@ -101,8 +99,7 @@ class FormulirPelaporanKejadianController extends Controller
         $request->validate([
             'users_id' => 'required|exists:users,id',
             'jenis_kejadian' => 'required|string',
-            'tanggal_kejadian' => 'required|date',
-            'waktu_keajadian' => 'required|time',
+            'tanggal_waktu_kejadian' => 'required|date',
             'tempat_kejadian' => 'required|string',
             'kerugian_akibat_kejadian' => 'required|string',
             'keterangan_lain' => 'required|string',

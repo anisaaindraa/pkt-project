@@ -29,12 +29,12 @@ export default function Dashboard({ auth }) {
             </div>
 
             {/* Data Formulir Pelaksanaan Tugas Card */}
-            <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
+            {/* <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
               <h3 className="text-xl font-semibold mb-4">Data Formulir Pelaksanaan Tugas</h3>
-              <InertiaLink href='/tugas' className="text-blue-500 hover:underline">
+              <InertiaLink href='/datatugas' className="text-blue-500 hover:underline">
                 Go to Data Formulir Pelaksanaan Tugas
               </InertiaLink>
-            </div>
+            </div> */}
 
             {/* Data Formulir Pelaporan Kejadian Card */}
             <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">

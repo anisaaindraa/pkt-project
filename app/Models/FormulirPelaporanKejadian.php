@@ -17,10 +17,10 @@ class FormulirPelaporanKejadian extends Model
     protected $fillable = [
         'users_id',
         'jenis_kejadian',
-        'tanggal_kejadian',
-        'waktu_kejadian',
+        'tanggal_waktu_kejadian',
         'tempat_kejadian',
         'kerugian_akibat_kejadian',
+        'penanganan',
         'keterangan_lain',
     ];
     protected $dates = ['deleted_at'];
