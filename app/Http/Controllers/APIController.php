@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Validator;
+use Firebase\JWT\Key;
 
 class APIController extends Controller
 {
@@ -49,6 +50,14 @@ class APIController extends Controller
             'user' => auth()->guard('api')->user(),
             'token' => $jwt
         ], 200);
+    }
+
+    public function getUserId(Request $request)
+    {
+        $token = $request->header('Authorization');
+        $decoded = JWT::decode($token, new Key(config('app.jwt_token'), 'HS256'));
+
+        return response()->json(['user_id' => $decoded->iss->id]);
     }
 
     public function createFormulirPatroliLaut(Request $request)
@@ -99,8 +108,7 @@ class APIController extends Controller
         $validator = Validator::make($request->all(), [
             'users_id' => ['required', 'integer', 'exists:users,id'],
             'jenis_kejadian' => ['required', 'string'],
-            'tanggal_kejadian' => ['required', 'date'],
-            'waktu_kejadian' => ['required', 'date_format:H:i'],
+            'tanggal_kejadian' => ['required'],
             'tempat_kejadian' => ['required', 'string'],
             'kerugian_akibat_kejadian' => ['nullable', 'string'],
             'keterangan_lain' => ['required', 'string'],
@@ -130,8 +138,7 @@ class APIController extends Controller
             $formulir = FormulirPelaporanKejadian::create([
                 'users_id' => $request->users_id,
                 'jenis_kejadian' => $request->jenis_kejadian,
-                'tanggal_kejadian' => $request->tanggal_kejadian,
-                'waktu_kejadian' => $formattedWaktuKejadian,
+                'tanggal_waktu_kejadian' => $request->tanggal_kejadian,
                 'tempat_kejadian' => $request->tempat_kejadian,
                 'kerugian_akibat_kejadian' => $request->kerugian_akibat_kejadian,
                 'keterangan_lain' => $request->keterangan_lain,

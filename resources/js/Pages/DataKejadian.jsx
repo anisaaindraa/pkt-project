@@ -57,10 +57,7 @@ const DataTableKejadian = ({ formulir_pelaporan_kejadian }) => {
                                 Jenis Kejadian
                             </th>
                             <th className="py-2 px-4 border-b">
-                                Tanggal Kejadian
-                            </th>
-                            <th className="py-2 px-4 border-b">
-                                Waktu Kejadian
+                                Tanggal Waktu Kejadian
                             </th>
                             <th className="py-2 px-4 border-b">
                                 Tempat Kejadian
@@ -88,9 +85,6 @@ const DataTableKejadian = ({ formulir_pelaporan_kejadian }) => {
                                     </td>
                                     <td className="py-2 px-4 text-center">
                                         {formulir.tanggal_kejadian}
-                                    </td>
-                                    <td className="py-2 px-4 text-center">
-                                        {formulir.waktu_kejadian}
                                     </td>
                                     <td className="py-2 px-4 text-center">
                                         {formulir.tempat_kejadian}

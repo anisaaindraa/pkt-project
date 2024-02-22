@@ -28,6 +28,7 @@ Route::middleware(['auth.api'])->group(function () {
     Route::get('example', function () {
         return 'Hello, login passed!';
     });
+    Route::get('getuserid', [APIController::class, 'getUserId']);
 });
 Route::post('formpatrolilaut', [APIController::class, 'createFormulirPatroliLaut']);
 Route::post('formpelaporankejadian', [APIController::class, 'createFormulirPelaporanKejadian']);
