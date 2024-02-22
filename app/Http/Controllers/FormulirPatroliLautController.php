@@ -42,6 +42,7 @@ class FormulirPatroliLautController extends Controller
             $formulir = FormulirPatroliLaut::findOrFail($id);
             $m_shift = MShift::all();
             $photo = PhotoPatroliLaut::find($id);
+            $users = User::all();
             $user = User::find($formulir->users_id);
 
             return Inertia::render('UserEditPage', [
@@ -49,6 +50,7 @@ class FormulirPatroliLautController extends Controller
                 'm_shift' => $m_shift,
                 'photo' => $photo,
                 'user' => $user,
+                'users' => $users,
                 'updateUrl' => route('formulirpatrolilaut.update', ['id' => $id]),
             ]);
         } catch (\Exception $e) {
@@ -59,20 +61,16 @@ class FormulirPatroliLautController extends Controller
 
     public function update(Request $request, $id)
     {
-        $formulir = FormulirPatroliLaut::findOrFail($id);
-        $validatedData = $request->validate([
-            'users_id' => 'required|exists:users,id',
-            'tanggal_kejadian' => 'required|date',
-            'm_shift_id' => 'required|exists:m_shift,id',
-            'uraian_hasil' => 'required|string',
-            'keterangan' => 'required|string',
-        ]);
-
+    
+        $formulir = FormulirPatroliLaut::find($id);
+       
+            
+        dd($request);
+        
         try {
-            // Mengupdate data user
             $formulir->update($validatedData);
 
-            // Redirect back to the edit page with success message
+            
             return redirect()->route('formulirpatrolilaut.edit', $formulir)->with('success', 'Formulir berhasil diupdate');
         } catch (\Exception $e) {
             // Handle errors

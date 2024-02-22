@@ -5,25 +5,25 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import DateTimePickerMui from "@/Components/DateTimePickerMui";
 
 export default function UserEditPage(props) {
+    const { users, user, m_shift, formulir_patroli_laut } = props;
+
     const [formData, setFormData] = useState({
-        role_id: "",
-        username: "",
-        email: "",
-        nama_user: "",
-        alamat_user: "",
-        pekerjaan_user: "",
-        npk_user: "",
+        user_id: "",
+        m_shift_id: "",
+        keterangan: "",
+        tanggal_kejadian: "",
+        uraian_hasil: "",
+        status: "",
     });
 
     useEffect(() => {
         setFormData({
-            role_id: props.user.role_id,
-            username: props.user.username,
-            email: props.user.email,
-            nama_user: props.user.nama_user,
-            alamat_user: props.user.alamat_user,
-            pekerjaan_user: props.user.pekerjaan_user,
-            npk_user: props.user.npk_user,
+            user_id: user.id,
+            m_shift_id: formulir_patroli_laut.m_shift_id,
+            keterangan: formulir_patroli_laut.keterangan,
+            tanggal_kejadian: formulir_patroli_laut.tanggal_kejadian,
+            uraian_hasil: formulir_patroli_laut.uraian_hasil,
+            status: formulir_patroli_laut.status,
         });
     }, [props.user]);
 
@@ -54,8 +54,6 @@ export default function UserEditPage(props) {
         }
     };
 
-    console.log("ISI PROPS", props);
-
     return (
         <AuthenticatedLayout>
             <>
@@ -63,69 +61,88 @@ export default function UserEditPage(props) {
                     Formulir Edit Patroli Laut
                 </h3>
 
-                <form>
-                    <div class="space-y-12">
-                        <div class="border-b border-gray-900/10 pb-12">
-                            <h2 class="text-base font-semibold leading-7 text-gray-900">
+                <form onSubmit={handleSubmit}>
+                    <div className="space-y-12">
+                        <div className="border-b border-gray-900/10 pb-12">
+                            <h2 className="text-base font-semibold leading-7 text-gray-900">
                                 Data Formulir
                             </h2>
-                            <p class="mt-1 text-sm leading-6 text-gray-600">
+                            <p className="mt-1 text-sm leading-6 text-gray-600">
                                 Merubah data formulir patroli laut.
                             </p>
 
-                            <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                            <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                                 <div className="flex col-span-full gap-4">
-                                    <div class="flex-1">
+                                    <div className="flex-1">
                                         <label
                                             htmlFor="user"
-                                            class="block text-lg font-medium leading-6 text-gray-900"
+                                            className="block text-lg font-medium leading-6 text-gray-900"
                                         >
                                             Petugas
                                         </label>
-                                        <div class="mt-2">
+                                        <div className="mt-2">
                                             <select
-                                                id="countries"
-                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                id="user"
+                                                name="user_id"
+                                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                             >
-                                                <option>United States</option>
-                                                <option>Canada</option>
-                                                <option>France</option>
-                                                <option>Germany</option>
+                                                {users.map((item) => (
+                                                    <option
+                                                        key={item.id}
+                                                        value={form.user_id}
+                                                        defaultValue={user.id}
+                                                    >
+                                                        {item.username} -{" "}
+                                                        {item.nama_user}
+                                                    </option>
+                                                ))}
                                             </select>
                                         </div>
                                     </div>
 
-                                    <div class="flex-1">
+                                    <div className="flex-1">
                                         <label
                                             htmlFor="user"
-                                            class="block text-lg font-medium leading-6 text-gray-900"
+                                            className="block text-lg font-medium leading-6 text-gray-900"
                                         >
                                             Shift
                                         </label>
-                                        <div class="mt-2">
+                                        <div className="mt-2">
                                             <select
-                                                id="countries"
-                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                id="m_shift"
+                                                name="m_shift_id"
+                                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                             >
-                                                <option>United States</option>
-                                                <option>Canada</option>
-                                                <option>France</option>
-                                                <option>Germany</option>
+                                                {m_shift.map((shift) => (
+                                                    <option
+                                                        key={shift.id}
+                                                        value={
+                                                            formulir_patroli_laut.m_shift_id
+                                                        }
+                                                        defaultValue={
+                                                            formulir_patroli_laut.m_shift_id
+                                                        }
+                                                    >
+                                                        {shift.id} -{" "}
+                                                        {shift.nama_shift}
+                                                    </option>
+                                                ))}
                                             </select>
                                         </div>
                                     </div>
 
-                                    <div class="flex-1">
+                                    <div className="flex-1">
                                         <label
                                             htmlFor="user"
-                                            class="block text-lg font-medium leading-6 text-gray-900"
+                                            className="block text-lg font-medium leading-6 text-gray-900"
                                         >
                                             Keterangan
                                         </label>
-                                        <div class="mt-2">
+                                        <div className="mt-2">
                                             <select
-                                                id="countries"
-                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                id="keterangan"
+                                                name="keterangan"
+                                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                             >
                                                 <option>Aman</option>
                                                 <option>Tidak Aman</option>
@@ -136,10 +153,7 @@ export default function UserEditPage(props) {
 
                                 <div className="col-span-full flex gap-8">
                                     <div className="flex-1">
-                                        <label
-                                            className="text-lg"
-                                            htmlhtmlFor=""
-                                        >
+                                        <label className="text-lg" htmlFor="">
                                             Tanggal dan Waktu Temuan
                                         </label>
                                         <DateTimePickerMui />
@@ -148,54 +162,64 @@ export default function UserEditPage(props) {
                                     <div className="flex-1">
                                         <label
                                             htmlFor="about"
-                                            class="block font-medium leading-6 text-gray-900 text-lg"
+                                            className="block font-medium leading-6 text-gray-900 text-lg"
                                         >
                                             Uraian Hasil Patroli
                                         </label>
-                                        <div class="mt-2">
+                                        <div className="mt-2">
                                             <textarea
                                                 id="about"
-                                                name="about"
+                                                name="uraian_hasil"
                                                 rows="3"
-                                                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                            ></textarea>
+                                                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                            >
+                                                {
+                                                    formulir_patroli_laut.uraian_hasil
+                                                }
+                                            </textarea>
                                         </div>
-                                        <p class="mt-3 text-sm leading-6 text-gray-600">
+                                        <p className="mt-3 text-sm leading-6 text-gray-600">
                                             Jelaskan mengenai hasil temuan.
                                         </p>
                                     </div>
                                 </div>
 
-                                <div class="col-span-full">
+                                <div className="col-span-full">
                                     <label className="text-lg" htmlhtmlFor="">
                                         Status Laporan
                                     </label>
 
-                                    <div class="mt-2">
+                                    <div className="mt-2">
                                         <select
                                             id="countries"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                            name="status"
+                                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         >
-                                            <option>Pending</option>
-                                            <option>Accepted</option>
-                                            <option>Rejected</option>
+                                            <option value="pending">
+                                                Pending
+                                            </option>
+                                            <option value="accepted">
+                                                Accepted
+                                            </option>
+                                            <option value="rejected">
+                                                Rejected
+                                            </option>
                                         </select>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-                    <div class="mt-6 flex items-center justify-end gap-x-6">
+                    <div className="mt-6 flex items-center justify-end gap-x-6">
                         <button
                             type="button"
-                            class="text-sm font-semibold leading-6 text-gray-900"
+                            className="text-sm font-semibold leading-6 text-gray-900"
                         >
                             Batalkan
                         </button>
                         <button
                             type="submit"
-                            class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                            className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                         >
                             Perbarui
                         </button>

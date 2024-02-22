@@ -118,7 +118,7 @@ const DataTablePatroli = ({ formulir_patroli_laut }) => {
                                                     href={route(
                                                         "formulirpatrolilaut.edit",
                                                         {
-                                                            id: formulir_patroli_laut.id,
+                                                            id: formulir_patroli_laut.id_formulir_patroli_laut,
                                                         }
                                                     )}
                                                     className="bg-blue-500 text-white px-3 py-1 rounded-md mr-1 focus:outline-none focus:shadow-outline-blue"
@@ -128,7 +128,7 @@ const DataTablePatroli = ({ formulir_patroli_laut }) => {
                                                 <button
                                                     onClick={() =>
                                                         handleDelete(
-                                                            formulir_patroli_laut.id
+                                                            formulir_patroli_laut.id_formulir_patroli_laut
                                                         )
                                                     }
                                                     className="bg-red-500 text-white px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-red"
